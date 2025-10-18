@@ -23,13 +23,14 @@ export const LoadingScreen: React.FC = () => {
 
 const CustomLayout: React.FC<LayoutProps> = ({ children, route }) => {
   const { isLoggedIn, login, logout, userType } = useAuthStore();
-
   const { refetch } = useQuery("renew", {
     queryFn: async () => {
       if (!isLoggedIn) {
         return;
       }
-      const { data } = await axios.get(`/${userType}//auth/renew`);
+      const { data } = await axios.get(
+        `/${userType === "administration" ? "admin" : userType}/auth/renew`
+      );
       return data;
     },
     onSuccess: (data) => {
@@ -93,8 +94,8 @@ const CustomLayout: React.FC<LayoutProps> = ({ children, route }) => {
     }
 
     if (!isAuthRoute && !isLoggedIn) {
-      if (location.pathname !== `/${userType}/login`) {
-        navigate(`/${userType}/login`, { replace: true });
+      if (location.pathname !== "/") {
+        navigate("/", { replace: true });
       }
       return;
     }

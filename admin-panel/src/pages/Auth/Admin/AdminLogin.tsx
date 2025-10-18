@@ -83,7 +83,7 @@ const AdminLogin: React.FC = () => {
 
 export const adminLoginNavigationRoute = {
   element: <AdminLogin />,
-  path: "/admin/login",
+  path: "/administration/login",
   isAuthRoute: true
 };
 

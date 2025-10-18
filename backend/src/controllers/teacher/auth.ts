@@ -51,7 +51,7 @@ export const login = async (
     return res.json({
       message: getResponseMessage("loginSuccessful"),
       data: {
-        userType: "teacheristration",
+        userType: "teacher",
         user: user,
       },
     });
@@ -102,7 +102,7 @@ export const verifyOtp = async (
     return res.json({
       message: getResponseMessage("loginSuccessful"),
       data: {
-        userType: "teacheristration",
+        userType: "teacher",
         user: teacher,
       },
     });
@@ -177,7 +177,7 @@ export const renew = async (
 
     return res.json({
       data: {
-        userType: "teacheristration",
+        userType: "teacher",
         user,
       },
     });
@@ -300,7 +300,7 @@ export const resetPassword = async (
     return res.status(200).json({
       message: getResponseMessage("passwordChanged"),
       data: {
-        userType: "teacheristration",
+        userType: "teacher",
         user: newTeacher,
       },
     });

@@ -11,7 +11,7 @@ const studentRouteList = [
 ];
 
 const teacherRouteList = [
-  { path: "/upload", router: TeacherRoutes.teacherAuthRouter },
+  { path: "/auth", router: TeacherRoutes.teacherAuthRouter },
 ];
 
 export const generateRoutes = (app: Express) => {

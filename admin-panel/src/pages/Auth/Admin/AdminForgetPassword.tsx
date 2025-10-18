@@ -129,7 +129,7 @@ const AdminForgetPassword = () => {
 
 export const adminForgetPasswordNavigationRoute = {
   element: <AdminForgetPassword />,
-  path: "/admin/forget-password",
+  path: "/administration/forget-password",
   isAuthRoute: true
 };
 
