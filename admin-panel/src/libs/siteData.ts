@@ -1,3 +1,4 @@
+import { LocaleConfig } from "@/components/ui";
 import { Stage } from "@/types";
 import { CardSim, Code, FileText, Globe } from "lucide-react";
 
@@ -71,7 +72,7 @@ export const getPageInfo = (stage: Stage) => {
 export const locales = [
   { code: "en", label: "English", flag: "🇬🇧" },
   { code: "ka", label: "ქართული", flag: "🇬🇪" }
-];
+] as LocaleConfig[];
 
 export const platformServices = [
   {
