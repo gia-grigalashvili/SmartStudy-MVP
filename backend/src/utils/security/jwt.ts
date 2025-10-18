@@ -11,7 +11,7 @@ const REFRESH_TOKEN_EXPIRES_MS = 7 * 24 * 60 * 60 * 1000;
 const STAGE_TOKEN_EXPIRES_IN = "5m";
 const STAGE_TOKEN_EXPIRES_MS = 5 * 60 * 1000;
 
-type TokenType = "USER" | "ADMIN";
+type TokenType = "STUDENT" | "TEACHER" | "ADMIN";
 
 interface TokenResponse {
   token: string;
@@ -23,8 +23,10 @@ export const generateAccessToken = (
   type: TokenType
 ): TokenResponse => {
   const secret =
-    type === "USER"
-      ? getEnvVariable("JWT_ACCESS_SECRET")
+    type === "STUDENT"
+      ? getEnvVariable("STUDENT_JWT_ACCESS_SECRET")
+      : type === "TEACHER"
+      ? getEnvVariable("TEACHER_JWT_ACCESS_SECRET")
       : getEnvVariable("ADMIN_JWT_ACCESS_SECRET");
 
   if (!secret) throw new Error("JWT secret not provided");
@@ -44,8 +46,10 @@ export const generateRefreshToken = (
   type: TokenType
 ): TokenResponse => {
   const secret =
-    type === "USER"
-      ? getEnvVariable("JWT_REFRESH_SECRET")
+    type === "STUDENT"
+      ? getEnvVariable("STUDENT_JWT_REFRESH_SECRET")
+      : type === "TEACHER"
+      ? getEnvVariable("TEACHER_JWT_REFRESH_SECRET")
       : getEnvVariable("ADMIN_JWT_REFRESH_SECRET");
 
   if (!secret) throw new Error("JWT secret not provided");
@@ -60,7 +64,10 @@ export const generateRefreshToken = (
   };
 };
 
-export const verifyRefreshToken = async (refreshToken: string) => {
+export const verifyRefreshToken = async (
+  refreshToken: string,
+  type: TokenType
+) => {
   const storedToken = await prisma.refreshToken.findUnique({
     where: { token: refreshToken },
   });
@@ -74,7 +81,13 @@ export const verifyRefreshToken = async (refreshToken: string) => {
     throw new Error("Refresh token expired");
   }
 
-  const secret = getEnvVariable("JWT_REFRESH_SECRET");
+  const secret =
+    type === "STUDENT"
+      ? getEnvVariable("STUDENT_JWT_REFRESH_SECRET")
+      : type === "TEACHER"
+      ? getEnvVariable("TEACHER_JWT_REFRESH_SECRET")
+      : getEnvVariable("ADMIN_JWT_REFRESH_SECRET");
+
   if (!secret) throw new Error("JWT secret not provided");
 
   try {
@@ -87,8 +100,13 @@ export const verifyRefreshToken = async (refreshToken: string) => {
   }
 };
 
-export const checkRefreshToken = (refreshToken: string) => {
-  const secret = getEnvVariable("JWT_REFRESH_SECRET");
+export const checkRefreshToken = (refreshToken: string, type: TokenType) => {
+  const secret =
+    type === "STUDENT"
+      ? getEnvVariable("STUDENT_JWT_REFRESH_SECRET")
+      : type === "TEACHER"
+      ? getEnvVariable("TEACHER_JWT_REFRESH_SECRET")
+      : getEnvVariable("ADMIN_JWT_REFRESH_SECRET");
 
   try {
     const decoded = jwt.verify(refreshToken, secret) as {
@@ -103,12 +121,16 @@ export const checkRefreshToken = (refreshToken: string) => {
 
 export const generateTokens = async (user: User, userType: string) => {
   let accessSecret =
-    (userType === "USER"
-      ? getEnvVariable("JWT_ACCESS_SECRET")
+    (userType === "STUDENT"
+      ? getEnvVariable("STUDENT_JWT_ACCESS_SECRET")
+      : userType === "TEACHER"
+      ? getEnvVariable("TEACHER_JWT_ACCESS_SECRET")
       : getEnvVariable("ADMIN_JWT_ACCESS_SECRET")) || "";
   let refreshSecret =
-    (userType === "USER"
-      ? getEnvVariable("JWT_REFRESH_SECRET")
+    (userType === "STUDENT"
+      ? getEnvVariable("STUDENT_JWT_REFRESH_SECRET")
+      : userType === "TEACHER"
+      ? getEnvVariable("TEACHER_JWT_REFRESH_SECRET")
       : getEnvVariable("ADMIN_JWT_REFRESH_SECRET")) || "";
 
   if (!accessSecret || !refreshSecret) {
@@ -133,11 +155,17 @@ export const generateTokens = async (user: User, userType: string) => {
 
 export const generateStageToken = (
   id: string,
-  remember: boolean
+  remember: boolean,
+  type: TokenType
 ): TokenResponse => {
   const payload = { id, remember };
 
-  const secret = getEnvVariable("STAGE_JWT_SECRET");
+  const secret =
+    type === "STUDENT"
+      ? getEnvVariable("STUDENT_JWT_SECRET")
+      : type === "TEACHER"
+      ? getEnvVariable("TEACHER_JWT_SECRET")
+      : getEnvVariable("ADMIN_JWT_SECRET");
 
   if (!secret) throw new Error("Stage JWT secret not provided");
 

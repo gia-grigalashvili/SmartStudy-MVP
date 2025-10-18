@@ -48,6 +48,14 @@ export const errorMessages = {
     en: "Admin authentication failed.",
     ka: "ადმინისტრატორის ავტორიზაცია წარუმატებლად დასრულდა.",
   },
+  studentAuthenticateFailed: {
+    en: "Student authentication failed.",
+    ka: "სტუდენტის ავტორიზაცია წარუმატებლად დასრულდა.",
+  },
+  invalidImage: {
+    en: "Invalid Image",
+    ka: "არასწორი სურათი",
+  },
 
   // Messages
   verificationSuccessful: {

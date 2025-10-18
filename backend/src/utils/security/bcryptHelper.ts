@@ -1,7 +1,6 @@
 import * as bcrypt from "bcrypt";
 import crypto from "crypto";
 import { getEnvVariable } from "@/config";
-import { createHmac } from "crypto";
 
 export const createPassword = async (password: string) => {
   const saltRounds = Number(getEnvVariable("SALT_ROUNDS") || 10);
@@ -26,11 +25,3 @@ export const generateSmsCode = async () => {
 export const verifyField = async (plainField: string, hashedField: string) => {
   return bcrypt.compare(plainField, hashedField);
 };
-
-export function hashIp(ip: string): string {
-  const key = getEnvVariable("IP_HASH_SECRET");
-
-  const normalized = String(ip).trim();
-
-  return createHmac("sha256", key).update(normalized).digest("hex");
-}

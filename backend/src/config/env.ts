@@ -17,7 +17,14 @@ const envSchema = z.object({
   ADMIN_JWT_REFRESH_SECRET: z.string().min(32),
   STUDENT_JWT_ACCESS_SECRET: z.string().min(32),
   STUDENT_JWT_REFRESH_SECRET: z.string().min(32),
-  STAGE_JWT_SECRET: z.string().min(32),
+  TEACHER_JWT_ACCESS_SECRET: z.string().min(32),
+  TEACHER_JWT_REFRESH_SECRET: z.string().min(32),
+  ADMIN_JWT_SECRET: z.string().min(32),
+  STUDENT_JWT_SECRET: z.string().min(32),
+  TEACHER_JWT_SECRET: z.string().min(32),
+  ADMIN_STAGE_JWT_SECRET: z.string().min(32),
+  STUDENT_STAGE_JWT_SECRET: z.string().min(32),
+  TEACHER_STAGE_JWT_SECRET: z.string().min(32),
 
   // URLs
   CLIENT_URL: z.string().url(),

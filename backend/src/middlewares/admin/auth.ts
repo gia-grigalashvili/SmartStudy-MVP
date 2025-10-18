@@ -65,7 +65,7 @@ export const isAdminVerified = (
 
     const decoded = jwt.verify(
       stageToken,
-      getEnvVariable("STAGE_JWT_SECRET")
+      getEnvVariable("ADMIN_STAGE_JWT_SECRET")
     ) as { id: string; remember?: boolean };
 
     (req as any).userId = decoded.id;

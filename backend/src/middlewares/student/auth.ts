@@ -65,7 +65,7 @@ export const isStudentVerified = (
 
     const decoded = jwt.verify(
       stageToken,
-      getEnvVariable("STAGE_JWT_SECRET")
+      getEnvVariable("STUDENT_STAGE_JWT_SECRET")
     ) as { id: string; remember?: boolean };
 
     (req as any).userId = decoded.id;
