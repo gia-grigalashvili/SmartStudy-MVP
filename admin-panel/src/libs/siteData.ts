@@ -1,5 +1,5 @@
 import { Stage } from "@/types";
-
+import { CardSim, Code, FileText, Globe } from "lucide-react";
 
 type SubNavigationItem = {
   name: string;
@@ -71,4 +71,28 @@ export const getPageInfo = (stage: Stage) => {
 export const locales = [
   { code: "en", label: "English", flag: "🇬🇧" },
   { code: "ka", label: "ქართული", flag: "🇬🇪" }
+];
+
+export const platformServices = [
+  {
+    icon: Code,
+    title: "global.liveCodeTitle",
+    desc: "global.liveCodeDescription"
+  },
+  {
+    icon: CardSim,
+    title: "global.fleshCardTitle",
+    desc: "global.fleshCardDescription"
+  },
+  {
+    icon: FileText,
+    title: "global.filesTitle",
+    desc: "global.filesDescription"
+  },
+  {
+    icon: Globe,
+    title: "global.websiteTitle",
+    desc: "global.websiteDescription"
+  }
+  // TODO: Add others
 ];

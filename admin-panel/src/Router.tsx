@@ -1,10 +1,17 @@
 import React from "react";
 import {
   createBrowserRouter,
-  Navigate,
+  // Navigate,
   RouterProvider
 } from "react-router-dom";
-import * as Routes from "./pages";
+import * as AdminRoutes from "./pages/Admin";
+import * as StudentRoutes from "./pages/Student";
+import * as TeacherRoutes from "./pages/Teacher";
+import * as AuthRoutes from "./pages/Auth";
+import { NotFound } from "./pages/NotFound";
+import { AuthWrapper } from "./components/auth";
+import CustomLayout from "./components/Layout";
+import Main from "./pages/Main";
 
 type AnyRoute = {
   path?: string;
@@ -22,43 +29,52 @@ const renderRouteElement = (route: AnyRoute) => {
   return <></>;
 };
 
-// const createRoutes = (
-//   routesObj: Record<string, AnyRoute>,
-//   isAuth?: boolean
-// ) => {
-//   if (!routesObj) return [];
+const createRoutes = (
+  routesObj: Record<string, AnyRoute>,
+  isAuth?: boolean,
+  basePath?: string
+) => {
+  if (!routesObj) return [];
 
-//   return Object.values(routesObj)
-//     .filter((r: any) => r && typeof r === "object" && "path" in r && r.path)
-//     .map((route: any) => ({
-//       ...route,
-//       path: route.path,
-//       element: (
-//         <CustomLayout route={route} path={route.path}>
-//           {isAuth ? (
-//             <AuthWrapper>{renderRouteElement(route)}</AuthWrapper>
-//           ) : (
-//             renderRouteElement(route)
-//           )}
-//         </CustomLayout>
-//       )
-//     }));
-// };
+  return Object.values(routesObj)
+    .filter((r: any) => r && typeof r === "object" && "path" in r && r.path)
+    .map((route: any) => ({
+      ...route,
+      path: basePath ? `${basePath}${route.path}` : route.path,
+      element: (
+        <CustomLayout route={route} path={route.path}>
+          {isAuth ? (
+            <AuthWrapper>{renderRouteElement(route)}</AuthWrapper>
+          ) : (
+            renderRouteElement(route)
+          )}
+        </CustomLayout>
+      )
+    }));
+};
 
 export const Router = () => {
-  
   const routesWithLayout = [
-    // { path: "/", element: <Navigate to="/dashboard" replace /> },
-    // ...createRoutes(Routes),
-    // ...createRoutes(AuthRoutes, true),
-    // {
-    //   path: "*",
-    //   element: (
-    //     <CustomLayout path="*">
-    //       <NotFound />
-    //     </CustomLayout>
-    //   )
-    // }
+    ...createRoutes(AdminRoutes, false, "/admin"),
+    ...createRoutes(StudentRoutes, false, "/student"),
+    ...createRoutes(TeacherRoutes, false, "/teacher"),
+    ...createRoutes(AuthRoutes, false),
+    {
+      path: "/",
+      element: (
+        <CustomLayout path="/">
+          <Main />
+        </CustomLayout>
+      )
+    },
+    {
+      path: "*",
+      element: (
+        <CustomLayout path="*">
+          <NotFound />
+        </CustomLayout>
+      )
+    }
   ];
 
   const router = createBrowserRouter(routesWithLayout);
