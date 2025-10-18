@@ -1,4 +1,4 @@
-model User {
+model Student {
   id                 String   @id @default(uuid(7)) @db.Uuid
   email              String?  @unique
   firstName          String
@@ -6,19 +6,12 @@ model User {
   fullName           String   @db.VarChar(255)
   age                Int?
   dateOfBirth        DateTime
-  info               String?
+  class              Int?     @default(1)
   personalId         String   @unique
   needPasswordChange Boolean  @default(false)
+  passwordHash       String
 
-  starredBlogs Blog[]        @relation("BlogStars")
-  transactions Transaction[]
-  form100s     Form100[]
-
-  photo File?
-  chat  Chat?
-
-  phoneNumber  String @unique
-  passwordHash String
+  translations StudentTranslation[]
 
   smsCode          String?
   smsCodeExpiresAt DateTime?
@@ -26,15 +19,14 @@ model User {
   isVerified Boolean @default(false)
 
   refreshTokens RefreshToken[]
-  visits        Visit[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("users")
+  @@map("students")
 }
 
-model PendingUser {
+model PendingStudent {
   id String @id @default(uuid(7)) @db.Uuid
 
   email        String?  @unique
@@ -44,7 +36,6 @@ model PendingUser {
   age          Int?
   dateOfBirth  DateTime
   personalId   String   @unique
-  phoneNumber  String   @unique
   passwordHash String
 
   smsCode          String?
@@ -55,5 +46,5 @@ model PendingUser {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("pending_users")
+  @@map("pending_students")
 }

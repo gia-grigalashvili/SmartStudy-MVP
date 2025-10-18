@@ -2,14 +2,12 @@ model Admin {
   id String @id @default(uuid(7)) @db.Uuid
 
   email        String @unique
-  firstName    String
-  lastName     String
   passwordHash String
 
-  photo         File?
+  translations  AdminTranslation[]
+  refreshTokens RefreshToken[]
+
   twoFactorAuth Boolean @default(true)
-  visitReminder Boolean @default(true)
-  notifications Boolean @default(true)
 
   smsCode          String?
   smsCodeExpiresAt DateTime?
@@ -17,6 +15,6 @@ model Admin {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([firstName, lastName], name: "full_name_index")
+  @@index([email], name: "email_index")
   @@map("admins")
 }

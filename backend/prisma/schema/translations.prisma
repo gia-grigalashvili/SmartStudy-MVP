@@ -1,299 +1,58 @@
-model HeaderTranslation {
+model AdminTranslation {
   id String @id @default(uuid(7)) @db.Uuid
 
-  name        String
-  position    String
-  headline    String
-  description String
-
-  header   Header @relation(fields: [headerId], references: [id], onDelete: Cascade)
-  headerId String @db.Uuid
+  firstName String
+  lastName  String
 
   language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
   languageId String   @db.Uuid
 
+  admin   Admin  @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  adminId String @db.Uuid
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([headerId, languageId])
-  @@map("header_translations")
+  @@unique([adminId, languageId])
+  @@map("admin_translations")
 }
 
-model IntroduceTranslation {
+model TeacherTranslation {
   id String @id @default(uuid(7)) @db.Uuid
 
-  headline    String
-  description String
-
-  introduce   Introduce @relation(fields: [introduceId], references: [id], onDelete: Cascade)
-  introduceId String    @db.Uuid
+  firstName String
+  lastName  String
+  fullName  String @db.VarChar(255)
 
   language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
   languageId String   @db.Uuid
 
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacherId String  @db.Uuid
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([introduceId, languageId])
-  @@map("introduce_translations")
+  @@unique([teacherId, languageId])
+  @@map("teacher_translations")
 }
 
-model NewsTranslation {
+model StudentTranslation {
   id String @id @default(uuid(7)) @db.Uuid
 
-  content String
-
-  news   News   @relation(fields: [newsId], references: [id], onDelete: Cascade)
-  newsId String @db.Uuid
+  firstName String
+  lastName  String
+  fullName  String @db.VarChar(255)
 
   language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
   languageId String   @db.Uuid
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([newsId, languageId])
-  @@map("news_translations")
-}
-
-model ServiceTranslation {
-  id String @id @default(uuid(7)) @db.Uuid
-
-  title       String
-  description String
-
-  service    Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-  serviceId  String   @db.Uuid
-  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  languageId String   @db.Uuid
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId String  @db.Uuid
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([serviceId, languageId])
-  @@map("service_translations")
-}
-
-model FAQTranslation {
-  id String @id @default(uuid(7)) @db.Uuid
-
-  question String
-  answer   String
-
-  faq        FAQ      @relation(fields: [faqId], references: [id], onDelete: Cascade)
-  faqId      String   @db.Uuid
-  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  languageId String   @db.Uuid
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([faqId, languageId])
-  @@map("faq_translations")
-}
-
-model BlogTranslation {
-  id String @id @default(uuid(7)) @db.Uuid
-
-  title   String
-  content String
-
-  blog       Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  blogId     String   @db.Uuid
-  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  languageId String   @db.Uuid
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([blogId, languageId])
-  @@map("blog_translations")
-}
-
-model CategoryTranslation {
-  id String @id @default(uuid(7)) @db.Uuid
-
-  name String
-
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId String   @db.Uuid
-  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  languageId String   @db.Uuid
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([categoryId, languageId])
-  @@map("category_translations")
-}
-
-model ContactTranslation {
-  id String @id @default(uuid(7)) @db.Uuid
-
-  title       String
-  description String
-
-  contact    Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
-  contactId  String   @db.Uuid
-  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  languageId String   @db.Uuid
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([contactId, languageId])
-  @@map("contact_translations")
-}
-
-model ExaminationSheetTranslation {
-  id String @id @default(uuid(7)) @db.Uuid
-
-  destinationSheet        String?
-  analysesBeforeNextVisit String?
-  recommendation          String?
-  prescriptionSummary     String?
-
-  examinationSheet   ExaminationSheet @relation(fields: [examinationSheetId], references: [id], onDelete: Cascade)
-  examinationSheetId String           @db.Uuid
-  language           Language         @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  languageId         String           @db.Uuid
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([examinationSheetId, languageId])
-  @@map("examination_sheet_translations")
-}
-
-model ICDTranslation {
-  id String @id @default(uuid(7)) @db.Uuid
-
-  name        String
-  description String?
-
-  icd        ICD      @relation(fields: [icdId], references: [id], onDelete: Cascade)
-  icdId      String   @db.Uuid
-  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  languageId String   @db.Uuid
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([icdId, languageId])
-  @@map("icd_translations")
-}
-
-model RecipeUnitTranslation {
-  id String @id @default(uuid(7)) @db.Uuid
-
-  name        String
-  description String
-  comment     String?
-
-  recipeUnit   RecipeUnit @relation(fields: [recipeUnitId], references: [id], onDelete: Cascade)
-  recipeUnitId String     @db.Uuid
-
-  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  languageId String   @db.Uuid
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([recipeUnitId, languageId])
-  @@map("recipe_unit_translations")
-}
-
-model PageComponentTranslation {
-  id String @id @default(uuid(7)) @db.Uuid
-
-  name    String
-  content String
-
-  pageComponent   PageComponent @relation(fields: [pageComponentId], references: [id], onDelete: Cascade)
-  pageComponentId String        @db.Uuid
-  language        Language      @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  languageId      String        @db.Uuid
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([pageComponentId, languageId])
-  @@map("page_component_translations")
-}
-
-model AboutTranslation {
-  id String @id @default(uuid(7)) @db.Uuid
-
-  headline    String
-  description String
-
-  about   About  @relation(fields: [aboutId], references: [id], onDelete: Cascade)
-  aboutId String @db.Uuid
-
-  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  languageId String   @db.Uuid
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([aboutId, languageId])
-  @@map("about_translations")
-}
-
-model EducationTranslation {
-  id String @id @default(uuid(7)) @db.Uuid
-
-  name        String
-  degree      String
-  description String
-
-  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  languageId String   @db.Uuid
-
-  education   Education @relation(fields: [educationId], references: [id], onDelete: Cascade)
-  educationId String    @db.Uuid
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([educationId, languageId])
-  @@map("education_translations")
-}
-
-model ExperienceTranslation {
-  id String @id @default(uuid(7)) @db.Uuid
-
-  name        String
-  position    String
-  description String
-
-  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  languageId String   @db.Uuid
-
-  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
-  experienceId String     @db.Uuid
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([experienceId, languageId])
-  @@map("experience_translations")
-}
-
-model VideoTranslation {
-  id String @id @default(uuid(7)) @db.Uuid
-
-  name String
-
-  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  languageId String   @db.Uuid
-
-  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
-  videoId String @db.Uuid
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([videoId, languageId])
-  @@map("video_translations")
+  @@unique([studentId, languageId])
+  @@map("student_translations")
 }

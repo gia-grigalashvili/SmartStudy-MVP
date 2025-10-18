@@ -1,0 +1,46 @@
+model Teacher {
+  id                 String   @id @default(uuid(7)) @db.Uuid
+  email              String?  @unique
+  age                Int?
+  dateOfBirth        DateTime
+  personalId         String   @unique
+  needPasswordChange Boolean  @default(false)
+  passwordHash       String
+
+  translations TeacherTranslation[]
+
+  smsCode          String?
+  smsCodeExpiresAt DateTime?
+
+  isVerified Boolean @default(false)
+
+  refreshTokens RefreshToken[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("teachers")
+}
+
+model PendingTeacher {
+  id String @id @default(uuid(7)) @db.Uuid
+
+  email        String?  @unique
+  firstName    String
+  lastName     String
+  fullName     String   @db.VarChar(255)
+  age          Int?
+  dateOfBirth  DateTime
+  personalId   String   @unique
+  passwordHash String
+
+  smsCode          String?
+  smsCodeExpiresAt DateTime
+
+  isVerified Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("pending_teachers")
+}
