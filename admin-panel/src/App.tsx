@@ -9,7 +9,7 @@ function App() {
     <ThemeProvider defaultTheme="system" storageKey="SmartStudy-theme">
       <QueryClientProvider client={queryClient}>
         <Toaster />
-        <h1 className="w-[100px] text-amber-300"> sdada</h1>
+     
         <Router />
       </QueryClientProvider>
     </ThemeProvider>
