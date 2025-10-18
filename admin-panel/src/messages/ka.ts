@@ -1,16 +1,49 @@
 export const ka = {
-  translation: {
-    global: {
-      name: "SmartStudy",
-    },
-    notFound: {
-      resourceOfGiven: "გვერდი მითითებული მისამართზე",
-      pageNotFound: "ვერ მოიძებნა",
-      cannotBeFound: "ვერ მოიძებნა",
-      navigateBack: "უკან დაბრუნება"
-    },
-    pages: {
-      dashboard: "Dashboard"
-    },
-  }
+  sidebar: {
+    dashboard: 'მთავარი',
+    schoolBook: 'საგაკვეთილო ჟურნალი',
+    students: 'მოსწავლეები',
+    teachers: 'მასწავლებლები',
+    classes: 'კლასები',
+    subjects: 'საგნები',
+    settings: 'პარამეტრები',
+  },
+  header: {
+    welcome: 'მოგესალმებით',
+    profile: 'პროფილი',
+    logout: 'გასვლა',
+    language: 'ენა',
+    notifications: 'შეტყობინებები',
+  },
+  dashboard: {
+    title: 'მთავარი გვერდი',
+    totalStudents: 'მოსწავლეთა რაოდენობა',
+    totalTeachers: 'მასწავლებელთა რაოდენობა',
+    upcomingExams: 'მომავალი გამოცდები',
+    recentGrades: 'ბოლო ნიშნები',
+  },
+  schoolBook: {
+    title: 'საგაკვეთილო ჟურნალი',
+    studentName: 'მოსწავლის სახელი',
+    subject: 'საგანი',
+    grade: 'ნიშანი',
+    date: 'თარიღი',
+    addGrade: 'ნიშნის დამატება',
+    editGrade: 'ნიშნის ჩასწორება',
+    noGrades: 'ჯერ არ დამატებულა ნიშნები.',
+  },
+  general: {
+    save: 'შენახვა',
+    cancel: 'გაუქმება',
+    delete: 'წაშლა',
+    confirm: 'დადასტურება',
+    search: 'ძებნა',
+    actions: 'მოქმედებები',
+    back: 'უკან',
+    next: 'შემდეგი',
+  },
+  locales: {
+    english: 'ინგლისური',
+    georgian: 'ქართული',
+  },
 };
