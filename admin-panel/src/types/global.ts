@@ -1,4 +1,4 @@
-import { User } from "./user";
+// import { User } from "./user";
 
 export interface Language {
   id: string;
@@ -52,7 +52,7 @@ export interface LoginStage {
 
 export interface RefreshToken {
   id: string;
-  user: User;
+  // user: User;
   userId: string;
   token: string;
   expiresAt: string;

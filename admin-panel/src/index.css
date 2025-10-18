@@ -6,24 +6,20 @@
 :root {
   --font-size: 14px;
   --radius: 0.75rem;
-
 }
 
 .dark {
-  
 }
 
 @theme inline {
-
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
   }
 
   body {
-    @apply bg-background text-foreground;
+    /* @apply bg-background text-foreground; */
     font-family:
       "Inter",
       -apple-system,

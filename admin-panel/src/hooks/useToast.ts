@@ -121,7 +121,7 @@ function toast({
       variant,
       action,
       open: true,
-      onOpenChange: (open) => {
+      onOpenChange: (open: boolean) => {
         if (!open) dismiss();
       }
     }
