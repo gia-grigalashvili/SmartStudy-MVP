@@ -21,7 +21,7 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   defaultTheme = "system",
-  storageKey = "medory-theme"
+  storageKey = "SmartStudy-theme"
 }) => {
   const themeState = useTheme({ defaultTheme, storageKey });
 
