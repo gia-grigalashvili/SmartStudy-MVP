@@ -108,7 +108,7 @@ export const Sidebar: React.FC = () => {
           onPageChange={onPageChange}
           handleItemClick={handleItemClick}
         />
-        <SidebarFooter collapsed={collapsed} onPageChange={onPageChange} />
+        <SidebarFooter collapsed={collapsed} />
       </motion.div>
       <SidebarFlyout
         handleFlyoutLeave={handleFlyoutLeave}

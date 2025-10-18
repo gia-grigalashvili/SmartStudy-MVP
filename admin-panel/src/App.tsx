@@ -9,7 +9,6 @@ function App() {
     <ThemeProvider defaultTheme="system" storageKey="SmartStudy-theme">
       <QueryClientProvider client={queryClient}>
         <Toaster />
-     
         <Router />
       </QueryClientProvider>
     </ThemeProvider>

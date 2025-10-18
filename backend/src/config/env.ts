@@ -36,6 +36,8 @@ const envSchema = z.object({
   // Seeds
   SALT_ROUNDS: z.string(),
   ADMIN_PASSWORD: z.string(),
+  STUDENT_PASSWORD: z.string(),
+  TEACHER_PASSWORD: z.string(),
   EMAIL: z.string().email(),
   ADMIN_FIRST_NAME: z.string(),
   ADMIN_LAST_NAME: z.string(),

@@ -6,3 +6,4 @@ export * from "./toast";
 export * from "./form";
 export * from "./store";
 export * from "./sidebar";
+export * from "./auth";

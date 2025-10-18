@@ -22,31 +22,31 @@ export const useMenuItems = (): SidebarItem[] => {
     administration: [
       {
         key: "dashboard",
-        href: "dashboard",
+        href: "administration/dashboard",
         icon: <Home className="h-5 w-5" />,
         label: toUpperCase(t("admin.menu.dashboard"))
       },
       {
         key: "teachers",
-        href: "teachers",
+        href: "administration/teachers",
         icon: <Users className="h-5 w-5" />,
         label: toUpperCase(t("admin.menu.teachers"))
       },
       {
         key: "students",
-        href: "students",
+        href: "administration/students",
         icon: <User className="h-5 w-5" />,
         label: toUpperCase(t("admin.menu.students"))
       },
       {
         key: "groups",
-        href: "groups",
+        href: "administration/groups",
         icon: <FolderTree className="h-5 w-5" />,
         label: toUpperCase(t("admin.menu.groups"))
       },
       {
         key: "academic-calendar",
-        href: "academic-calendar",
+        href: "administration/academic-calendar",
         icon: <Calendar className="h-5 w-5" />,
         label: toUpperCase(t("admin.menu.academic-calendar"))
       }
@@ -54,25 +54,25 @@ export const useMenuItems = (): SidebarItem[] => {
     student: [
       {
         key: "dashboard",
-        href: "dashboard",
+        href: "student/dashboard",
         icon: <Home className="h-5 w-5" />,
         label: toUpperCase(t("student.menu.dashboard"))
       },
       {
         key: "ai-assistant",
-        href: "ai-assistant",
+        href: "student/ai-assistant",
         icon: <Globe className="h-5 w-5" />,
         label: toUpperCase(t("student.menu.ai-assistant"))
       },
       {
         key: "groups",
-        href: "groups",
+        href: "student/groups",
         icon: <FolderTree className="h-5 w-5" />,
         label: toUpperCase(t("student.menu.groups"))
       },
       {
         key: "tests",
-        href: "tests",
+        href: "student/tests",
         icon: <FileText className="h-5 w-5" />,
         label: toUpperCase(t("student.menu.tests"))
       }
@@ -80,19 +80,19 @@ export const useMenuItems = (): SidebarItem[] => {
     teacher: [
       {
         key: "dashboard",
-        href: "dashboard",
+        href: "teacher/dashboard",
         icon: <Home className="h-5 w-5" />,
         label: toUpperCase(t("teacher.menu.dashboard"))
       },
       {
         key: "groups",
-        href: "groups",
+        href: "teacher/groups",
         icon: <FolderTree className="h-5 w-5" />,
         label: toUpperCase(t("teacher.menu.groups"))
       },
       {
         key: "students",
-        href: "students",
+        href: "teacher/students",
         icon: <Users className="h-5 w-5" />,
         label: toUpperCase(t("teacher.menu.students"))
       }

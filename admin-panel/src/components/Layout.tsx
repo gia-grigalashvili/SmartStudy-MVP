@@ -23,13 +23,14 @@ export const LoadingScreen: React.FC = () => {
 
 const CustomLayout: React.FC<LayoutProps> = ({ children, route }) => {
   const { isLoggedIn, login, logout, userType } = useAuthStore();
-
   const { refetch } = useQuery("renew", {
     queryFn: async () => {
       if (!isLoggedIn) {
         return;
       }
-      const { data } = await axios.get(`/${userType}//auth/renew`);
+      const { data } = await axios.get(
+        `/${userType === "administration" ? "admin" : userType}/auth/renew`
+      );
       return data;
     },
     onSuccess: (data) => {
@@ -93,8 +94,8 @@ const CustomLayout: React.FC<LayoutProps> = ({ children, route }) => {
     }
 
     if (!isAuthRoute && !isLoggedIn) {
-      if (location.pathname !== `/${userType}/login`) {
-        navigate(`/${userType}/login`, { replace: true });
+      if (location.pathname !== "/") {
+        navigate("/", { replace: true });
       }
       return;
     }
@@ -103,15 +104,15 @@ const CustomLayout: React.FC<LayoutProps> = ({ children, route }) => {
   return (
     <div className="flex min-h-screen w-full grow">
       <main className="!text-foreground relative mb-[68px] flex max-w-full flex-1 md:mb-0">
-        {/* {isLoggedIn ? ( */}
+        {isLoggedIn ? (
           <>
             <Sidebar />
             <MobileNavigation />
             <Shell>{checking ? <LoadingScreen /> : children}</Shell>
           </>
-        {/* ) : (
+        ) : (
           children
-        )} */}
+        )}
       </main>
     </div>
   );
