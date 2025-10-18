@@ -58,7 +58,7 @@ export const Router = () => {
     ...createRoutes(AdminRoutes, false, "/admin"),
     ...createRoutes(StudentRoutes, false, "/student"),
     ...createRoutes(TeacherRoutes, false, "/teacher"),
-    ...createRoutes(AuthRoutes, false),
+    ...createRoutes(AuthRoutes, true),
     {
       path: "/",
       element: (
