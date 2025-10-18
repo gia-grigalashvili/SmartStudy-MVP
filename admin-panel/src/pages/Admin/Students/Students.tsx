@@ -2,7 +2,7 @@ const Students = () => {
   return <div>Students</div>;
 };
 
-export const StudentsNavigationRoute = {
+export const AdminStudentsNavigationRoute = {
   element: <Students />,
   path: "/students"
 };

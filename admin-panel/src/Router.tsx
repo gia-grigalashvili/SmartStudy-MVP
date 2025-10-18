@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   createBrowserRouter,
-  // Navigate,
+  useNavigate,
   RouterProvider
 } from "react-router-dom";
 import * as AdminRoutes from "./pages/Admin";
@@ -12,6 +12,7 @@ import { NotFound } from "./pages/NotFound";
 import { AuthWrapper } from "./components/auth";
 import CustomLayout from "./components/Layout";
 import Main from "./pages/Main";
+import { useAuthStore } from "@/store";
 
 type AnyRoute = {
   path?: string;
@@ -53,27 +54,30 @@ const createRoutes = (
     }));
 };
 
+const MainRedirect: React.FC = () => {
+  const { isLoggedIn, userType } = useAuthStore();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isLoggedIn && userType) {
+      navigate(`/${userType}/dashboard`, { replace: true });
+    }
+  }, [isLoggedIn, userType, navigate]);
+  return <Main />;
+};
+
 export const Router = () => {
   const routesWithLayout = [
-    ...createRoutes(AdminRoutes, false, "/admin"),
+    ...createRoutes(AdminRoutes, false, "/administration"),
     ...createRoutes(StudentRoutes, false, "/student"),
     ...createRoutes(TeacherRoutes, false, "/teacher"),
-    ...createRoutes(AuthRoutes, false),
+    ...createRoutes(AuthRoutes, true),
     {
       path: "/",
-      element: (
-        <CustomLayout path="/">
-          <Main />
-        </CustomLayout>
-      )
+      element: <MainRedirect />
     },
     {
       path: "*",
-      element: (
-        <CustomLayout path="*">
-          <NotFound />
-        </CustomLayout>
-      )
+      element: <NotFound />
     }
   ];
 

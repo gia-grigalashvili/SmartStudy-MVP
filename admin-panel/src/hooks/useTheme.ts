@@ -9,7 +9,7 @@ interface UseThemeProps {
 
 export const useTheme = ({
   defaultTheme = "system",
-  storageKey = "medory-theme"
+  storageKey = "SmartStudy-theme"
 }: UseThemeProps = {}) => {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === "undefined") return defaultTheme;

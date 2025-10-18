@@ -36,6 +36,10 @@ export const errorMessages = {
     en: "Authorization failed.",
     ka: "ავტორიზაცია წარუმატებლად დასრულდა.",
   },
+  codeisInvalid: {
+    en: "code is invalid",
+    ka: "კოდი არ არის ვალიდური",
+  },
   verificationRequired: {
     en: "Verification required.",
     ka: "ვერიფიკაცია აუცილებელია.",
@@ -51,6 +55,10 @@ export const errorMessages = {
   studentAuthenticateFailed: {
     en: "Student authentication failed.",
     ka: "სტუდენტის ავტორიზაცია წარუმატებლად დასრულდა.",
+  },
+  teacherAuthenticateFailed: {
+    en: "Teacher authentication failed.",
+    ka: "მასწავლებლის ავტორიზაცია წარუმატებლად დასრულდა.",
   },
   invalidImage: {
     en: "Invalid Image",

@@ -1,6 +1,6 @@
 import React from "react";
 import { AnimatedRightPanel } from "../ui";
-// import Logo from "@/assets/medory.webp";
+import Logo from "@/assets/SmartStudy.png";
 import { useTranslation } from "react-i18next";
 import { toUpperCase } from "@/utils";
 import { LanguageChanger } from "@/components/ui";
@@ -14,7 +14,11 @@ export const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({
       <div className="bg-auth-form-bg flex flex-1 flex-col">
         <div className="flex items-center justify-between p-4 md:p-8">
           <div className="flex items-center gap-3">
-            {/* <img src={Logo} alt="Medory" className="h-8 w-8 rounded-[4px]" /> */}
+            <img
+              src={Logo}
+              alt="SmartStudy"
+              className="h-8 w-8 rounded-[4px]"
+            />
             <span className="text-auth-text-primary font-semibold">
               {toUpperCase(t("global.name"))}
             </span>

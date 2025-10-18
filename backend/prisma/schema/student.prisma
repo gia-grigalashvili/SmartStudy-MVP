@@ -1,0 +1,24 @@
+model Student {
+  id                 String   @id @default(uuid(7)) @db.Uuid
+  email              String?  @unique
+  age                Int?
+  dateOfBirth        DateTime
+  class              Int?     @default(1)
+  personalId         String   @unique
+  needPasswordChange Boolean  @default(false)
+  passwordHash       String
+
+  translations StudentTranslation[]
+
+  smsCode          String?
+  smsCodeExpiresAt DateTime?
+
+  isVerified Boolean @default(false)
+
+  refreshTokens RefreshToken[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("students")
+}

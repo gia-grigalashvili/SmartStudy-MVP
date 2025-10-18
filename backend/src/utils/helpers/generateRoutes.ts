@@ -1,25 +1,34 @@
 import { Express } from "express";
-// import * as AdminRoutes from "@/routes/admin";
+import * as AdminRoutes from "@/routes/admin";
 import * as StudentRoutes from "@/routes/student";
+import * as TeacherRoutes from "@/routes/teacher";
 
-// const adminRouteList = [];
+const adminRouteList = [{ path: "/auth", router: AdminRoutes.adminAuthRouter }];
 
 const studentRouteList = [
+  { path: "/auth", router: StudentRoutes.studentAuthRouter },
   { path: "/upload", router: StudentRoutes.uploadRouter },
+];
+
+const teacherRouteList = [
+  { path: "/auth", router: TeacherRoutes.teacherAuthRouter },
 ];
 
 export const generateRoutes = (app: Express) => {
   const basePath = "/api/v1";
   const adminBasePath = `${basePath}/admin`;
+  const studentBasePath = `${basePath}/student`;
+  const teacherBasePath = `${basePath}/teacher`;
 
-  app.use(adminBasePath);
-  app.use(basePath);
-
-  // adminRouteList?.forEach((route) => {
-  //   app.use(`${adminBasePath}${route.path}`, route.router);
-  // });
+  adminRouteList?.forEach((route) => {
+    app.use(`${adminBasePath}${route.path}`, route.router);
+  });
 
   studentRouteList?.forEach((route) => {
-    app.use(`${basePath}${route.path}`, route.router);
+    app.use(`${studentBasePath}${route.path}`, route.router);
+  });
+
+  teacherRouteList?.forEach((route) => {
+    app.use(`${teacherBasePath}${route.path}`, route.router);
   });
 };
