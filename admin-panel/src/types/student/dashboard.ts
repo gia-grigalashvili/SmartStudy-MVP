@@ -3,10 +3,14 @@ export interface DashboardResponse {
 }
 
 export interface Dashboard {
-  id: string;
   studentStatistics: StudentStatistic;
-  createdAt: string;
-  updatedAt: string;
+  totalTasks: number;
+  completedTasks: number;
+  totalFlashcards: number;
+  totalQuizzes: number;
+  averageQuizScore: number;
+  passedTests: number;
+  weekProgress: number;
 }
 
 export interface StudentStatistic {
