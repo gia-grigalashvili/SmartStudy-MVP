@@ -56,7 +56,8 @@ export const en = {
       close: "Close",
       platform: "Platform",
       nextSlide: "Next",
-      previousSlide: "Previous"
+      previousSlide: "Previous",
+      preferences: "" // new key from your list
     },
 
     // 🧭 Navigation
@@ -132,6 +133,65 @@ export const en = {
         menu: "Menu",
         students: "Students",
         teachers: "Teachers"
+      },
+      groups: {
+        academicCalendar: "",
+        addGroup: "",
+        code: "",
+        management: "",
+        managementDescription: "",
+        noGroupsFound: "",
+        quizzes: "",
+        semester: "",
+        students: "",
+        subjects: "",
+        teacher: "",
+        viewCalendar: "",
+        year: "",
+        errors: {
+          codeRequired: "Code Required",
+          semesterRequired: "Semester Required",
+          subjectRequired: "Subject Required",
+          teacherRequired: "Teacher Required",
+          yearRequired: "Year Required"
+        }
+      },
+      students: {
+        addStudent: "",
+        age: "",
+        class: "",
+        createdAt: "",
+        dateOfBirth: "",
+        email: "",
+        groupsCount: "",
+        management: "",
+        managementDescription: "",
+        noStudentsFound: "",
+        password: "",
+        personalId: "",
+        errors: {
+          emailInvalid: "Invalid Email"
+        }
+      },
+      teachers: {
+        errors: {
+          emailInvalid: "Invalid Email",
+          dateOfBirthRequired: "Date of birth is required",
+          personalIdLength: "Personal ID must be between 9 and 20 characters",
+          passwordRequired: "Password is required",
+          firstNameRequired: "First name is required",
+          lastNameRequired: "Last name is required"
+        }
+      },
+      subjects: {
+        errors: {
+          codeRequired: "Code Required"
+        }
+      },
+      academicCalendar: {
+        errors: {
+          yearRequired: "Year Required"
+        }
       }
     },
 
@@ -400,7 +460,8 @@ export const en = {
 
     footer: {
       copyright: "© {{year}} SmartStudy — All rights reserved.",
-      description: "SmartStudy — personalized learning with AI."
+      description: "SmartStudy — personalized learning with AI.",
+      form: { management: "" }
     }
   }
 };
