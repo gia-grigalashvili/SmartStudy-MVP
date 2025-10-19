@@ -1,177 +1,254 @@
 export const ka = {
   translation: {
+    "/": "/",
+    ":": ":",
+    HH: "HH",
+    "HH:mm": "HH:mm",
+
+    common: {
+      yes: "კი",
+      no: "არა",
+      ok: "კარგი",
+      cancel: "გაუქმება",
+      close: "დახურვა",
+      confirm: "დადასტურება",
+      loading: "იტვირთება...",
+      search: "ძებნა",
+      clear: "გასუფთავება",
+      back: "უკან",
+      next: "შემდეგი",
+      previous: "წინა",
+      save: "შენახვა",
+      submit: "გაგზავნა",
+      edit: "რედაქტირება",
+      create: "შექმნა",
+      delete: "წაშლა",
+      apply: "დამოწმება",
+      reset: "გადაყენება",
+      upload: "ატვირთვა",
+      uploading: "იტვირთება...",
+      uploaded: "ატვირთულია",
+      actions: "მოქმედებები",
+      view: "ნახვა",
+      details: "დეტალები",
+      filter: "ფილტრი",
+      filters: "ფილტრები",
+      all: "ყველა",
+      none: "არცერთი",
+      more: "მეტი",
+      noneFound: "შედეგი ვერ მოიძებნა",
+      notAvailable: "არ არის ხელმისაწვდომი"
+    },
+
     global: {
+      appName: "SmartStudy",
       name: "SmartStudy",
       overview: "მიმოხილვა",
       description: "აღწერა",
+      adminPanel: "ადმინისტრატორის პანელი",
       adminPannel: "ადმინისტრატორის პანელი",
       language: "ენა",
-      loginTitle: "შესვლა",
-      loginSubtitle: "ჩაწერეთ თქვენი მონაცემები",
-      otpTitle: "შეიყვანეთ OTP",
-      otpSubtitle: "Ჩვენ გამოგიგზავინეთ კოდი",
-      passwordTitle: "პაროლის აღდგენა",
-      passwordSubtitle: "შეიყვანეთ თქვენი ელექტრონული ფოსტა",
-      resetTitle: "პაროლის შეცვლა",
-      newPasswordTitle: "ახალი პაროლი",
-      newPasswordSubtitle: "შეარჩიეთ ახალი პაროლი",
-      websiteDescription: "ვებგვერდის აღწერა"
+      websiteDescription: "ვებგვერდის აღწერა",
+      close: "დახურვა",
+      nextSlide: "შემდეგი",
+      previousSlide: "წინა",
+      platform: "პლატფორმა"
     },
 
-    dataTable: {
-      loading: "ჩატვირთვა...",
-      noData: "მონაცემები ვერ მოიძებნა",
-      all: "ყველა",
-      clear: "გასუფთავება",
-      search: "ძებნა"
+    nav: {
+      home: "მთავარი",
+      dashboard: "დაშბორდი",
+      settings: "პარამეტრები",
+      profile: "პროფილი",
+      users: "მომხმარებლები",
+      teachers: "მასწავლებლები",
+      students: "სტუდენტები",
+      logout: "გამოსვლა",
+      login: "შესვლა",
+      register: "რეგისტრაცია"
     },
 
     admin: {
       menu: {
+        "academic-calendar": "აკადემიური კალენდარი",
         dashboard: "დაშბორდი",
-        teachers: "მასწავლებლები",
-        students: "სტუდენტები"
+        groups: "ჯგუფები",
+        menu: "მენიუ",
+        students: "სტუდენტები",
+        teachers: "მასწავლებლები"
       }
     },
 
-    menu: {
-      notFound: "არ მოიძებნა",
-      dashboard: "დაშბორდი",
-      teachers: "მასწავლებლები",
-      students: "სტუდენტები"
+    auth: {
+      loginTitle: "შესვლა",
+      loginSubtitle: "შეიყვანეთ თქვენი მონაცემები",
+      signIn: "შესვლა",
+      signOut: "გასვლა",
+      signUp: "რეგისტრაცია",
+      forgotPassword: "პაროლის დავიწყება?",
+      resetPassword: "პაროლის გადაყენება",
+      newPassword: "ახალი პაროლი",
+      changePassword: "პაროლის შეცვლა",
+      labels: {
+        email: "ელ-ფოსტა",
+        password: "პაროლი",
+        otp: "OTP",
+        rememberMe: "მახსოვს"
+      },
+      errors: {
+        emailRequired: "ელ-ფოსტა აუცილებელია",
+        invalidEmail: "ელ-ფოსტა არასწორია",
+        passwordRequired: "პაროლი აუცილებელია",
+        invalidPassword: "პაროლი არასწორია",
+        onlyDigits: "მხოლოდ ციფრებია დაშვებული",
+        otpRequired: "OTP აუცილებელია",
+        invalidOTP: "OTP არასწორია",
+        tooShort: "მნიშვნელობა ძალიან მოკლეა",
+        tooLong: "მნიშვნელობა ძალიან გრძელია",
+        passwordLength: "პაროლი უნდა იყოს 8–100 სიმბოლო",
+        passwordMismatch: "პაროლები არ ემთხვევა",
+        passwordPattern: "პაროლი არ აკმაყოფილებს ფორმატს"
+      },
+      forgetPassword: {
+        backToLogin: "უკან შესვლაზე",
+        email: "ელ-ფოსტა",
+        send: "გაგზავნა"
+      },
+      loginForm: {
+        email: "ელ-ფოსტა",
+        password: "პაროლი",
+        login: "შესვლა",
+        remember: "მახსოვს"
+      },
+      otpForm: {
+        codeSentAt: "კოდი გაგზავნილია {{time}}",
+        resend: "ხელახლა გაგზავნა",
+        resendAvialible: "ხელახლა ხელმისაწვდომი {{seconds}} წამში",
+        verify: "შემოწმება"
+      }
     },
 
-    headers: {
-      areYouSure: "დარწმუნებული ხართ?",
-      deleteDescription: "ეს მოქმედება შეუქცევადია.",
-      cancel: "გაუქმება",
-      delete: "წაშლა"
+    dataTable: {
+      loading: "იტვირთება...",
+      noData: "მონაცემი არ არის",
+      noResults: "შედეგი ვერ მოიძებნა",
+      all: "ყველა",
+      clear: "გასუფთავება",
+      search: "ძებნა",
+      selectAll: "ყველას მონიშვნა",
+      itemsSelected: "{{count}} მონიშნულია",
+      page: "გვერდი",
+      of: "დან",
+      itemsPerPage: "ელემენტები გვერდზე",
+      actions: "მოქმედებები",
+      clearFilters: "ფილტრის გასუფთავება"
+    },
+
+    table: {
+      empty: "მონაცემი არ არის",
+      sortAsc: "სორტირება ზრდადობით",
+      sortDesc: "სორტირება კლებადობით",
+      column: "სვეტი",
+      rowActions: "რიგის მოქმედებები"
+    },
+
+    toast: {
+      saved: "წარმატებით შენახულია",
+      settings: { saved: "პარამეტრები შენახულია" },
+      failed: "ოპერაცია ვერ შესრულდა",
+      operation: {
+        failed: "ოპერაცია წარუმატებელია",
+        successful: "ოპერაცია წარმატებულია"
+      },
+      data: { synced: "მონაცემები სინქრონიზირებულია" },
+      error: "შეცდომა",
+      warning: "ყურადღება",
+      info: "ინფორმაცია",
+      added: "დამატებულია",
+      updated: "განახლებულია",
+      deleted: "წაშლილია"
     },
 
     confirmDialog: {
       areYouSure: "დარწმუნებული ხართ?",
       confirmAction: "დაადასტურეთ მოქმედება",
-      deleteDescription: "ეს ელემენტი მუდმივად წაიშლება."
-    },
-
-    toast: {
-      saved: "დაინახვა წარმატებით",
-      settings: {
-        saved: "პარამეტრები წარმატებით შენახულია"
-      },
-      failed: "ოპერაცია არასრულდა",
-      operation: {
-        failed: "ოპერაცია წარუმატებელია",
-        successful: "ოპერაცია წარმატებულია"
-      },
-      data: {
-        synced: "მონაცემები სინქრონიზებულია"
-      },
-      error: "შეცდომა",
-      network: {
-        error: "შეამოწმეთ ინტერნეტის კავშირი და სცადეთ თავიდან."
-      },
-      validation: {
-        error: "ველების სწორი შეყვანა აუცილებელია"
-      },
-      added: "დამატება წარმატებულია",
-      updated: "განახლება წარმატებულია",
-      deleted: "წაშლა წარმატებულია",
-      warning: "ყურადღება"
-    },
-
-    ui: {
-      languageErrorTooltip:
-        "{{count}} {{error}} ენაზე {{language}} {{context}}",
-      error: "შეცდომა",
-      errors: "შეცდომები",
-      metadata: "მეტამონაცემი",
-      hasValidationErrors: "არსებობს ვალიდაციის შეცდომები",
-      language: "ენა"
-    },
-
-    auth: {
-      errors: {
-        emailRequired: "ელ‑ფოსტა აუცილებელია",
-        invalidEmail: "ელ‑ფოსტა არასწორია",
-        onlyDigits: "მხოლოდ ციფრები",
-        otpRequired: "OTP უნდა შეიცავდეს 4 ციფრს",
-        invalidPassword: "პაროლი არასწორია"
-      }
+      deleteDescription: "ეს ელემენტი მუდმივად წაიშლება.",
+      cancel: "გაუქმება",
+      confirm: "დადასტურება",
+      delete: "წაშლა",
+      confirmDescription: "დარწმუნებული ხართ, რომ გსურთ გაგრძელება?"
     },
 
     notFound: {
-      resourceOfGiven: "გვერდი მითითებული მისამართზე",
-      pageNotFound: "ვერ მოიძებნა",
+      pageNotFound: "გვერდი ვერ მოიძებნა",
+      resourceOfGiven: "რესურსი მითითებული მისამართზე",
       cannotBeFound: "ვერ მოიძებნა",
-      navigateBack: "უკან დაბრუნება"
+      navigateBack: "დაბრუნება",
+      goHome: "მთავარ გვერდზე დაბრუნება"
     },
 
-    pages: {
-      dashboard: "დაშბორდი"
-    },
-    header: {
-      logo: "SmartStudy",
-      nav: {
-        home: "მთავარი",
-        features: "ფუნქციები",
-        about: "ჩვენ შესახებ",
-        contact: "კონტაქტი"
-      },
-      ctaButton: "დაიწყეთ"
-    },
     hero: {
-      badge: "ხელოვნური ინტელექტით გაძლიერებული პლატფორმა",
-      title: "ჭკვიანი სწავლება ხელოვნური ინტელექტის დახმარებით",
+      badge: "AI-ის მხარდაჭერით",
+      title: "ჭკვიანი სწავლება AI-ის დახმარებით",
       subtitle:
-        "SmartStudy აერთიანებს განათლებას და ტექნოლოგიას, რათა შექმნას პერსონალიზებული სასწავლო გამოცდილება, რომელიც ადაპტირებს თითოეული სტუდენტის პროგრესსა და სტილს.",
-      primaryButton: "დაიწყეთ"
+        "SmartStudy აერთიანებს განათლებას და ტექნოლოგიას პერსონალიზებული სწავლებისთვის.",
+      primaryButton: "დაიწყეთ",
+      secondaryButton: "გაიგე მეტი",
+      imageAlt: "ჰერო სურათი"
     },
+
     heroStats: {
       activeUsers: "500K+ აქტიური მომხმარებელი",
       aiEnhanced: "AI-ით გაუმჯობესებული"
     },
-    about: {
-      badge: "ინოვაციური საგანმანათლებლო ტექნოლოგია",
-      title: "AI-გაძლიერებული სასწავლო წიგნები თანამედროვე სტუდენტებისთვის",
-      paragraph1:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      paragraph2:
-        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      paragraph3:
-        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
-    },
+
     features: {
       sectionTitle: "ძირითადი ფუნქციები",
+      sectionSubtitle: "გაეცანით რაც გთავაზობთ",
       feature1: {
         title: "ჭკვიანი სასკოლო წიგნი",
-        description:
-          "მართეთ სტუდენტების შედეგები და შეფასებები თანამედროვე ციფრული სასკოლო წიგნის სისტემით."
+        description: "მართეთ შედეგები და შეფასებები თანამედროვე ციფრული წიგნით."
       },
       feature2: {
         title: "AI დახმარება",
         description:
-          "ჩვენი AI ეხმარება სუსტი მხარეების გამოვლენაში და გთავაზობთ პერსონალიზებულ სასწავლო გზებს."
+          "AI ეხმარება სუსტი მხარეების გამოვლენასა და პერსონალიზაციაში."
       },
       feature3: {
         title: "გლობალური წვდომა",
         description:
-          "დაკავშირდით სტუდენტებსა და მასწავლებლებთან ნებისმიერ ადგილას, ღრუბლოვან პლატფორმის მეშვეობით."
+          "დაკავშირებთ სტუდენტებსა და მასწავლებლებთან ნებისმიერ ადგილას."
       },
       feature4: {
-        title: "ინტერფაქტიული კონტენტი",
-        description:
-          "დაინტერესეთ სტუდენტები ინტერაქტიული და დინამიკური გაკვეთილებით, რომლებიც AI-ითაა გაძლიერებული."
+        title: "ინტერაქტიული კონტენტი",
+        description: "ინტერაქტიული და დინამიური გაკვეთილები AI მხარდაჭერით."
       },
       feature5: {
         title: "ჭკვიანი დახმარება",
-        description:
-          "ჩვენი AI ასისტენტი მიმართულებას აძლევს სტუდენტებს, რათა ისინი ეფექტურად მიაღწიონ სასწავლო მიზნებს."
+        description: "AI ასისტენტი უადვილებს სწავლის პროცესს."
       }
     },
+
     footer: {
       copyright: "© {{year}} SmartStudy — ყველა უფლება დაცულია.",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      description: "SmartStudy — პერსონალიზებული სწავლება AI-ით."
+    },
+
+    filters: {
+      apply: "ფილტრის გამოყენება",
+      clear: "გასუფთავება",
+      multiSelectPlaceholder: "აირჩიეთ..."
+    },
+
+    pagination: {
+      first: "პირველი",
+      last: "ბოლო",
+      next: "შემდეგი",
+      previous: "წინა",
+      page: "გვერდი",
+      of: "დან"
     }
   }
 };
+
+export default ka;

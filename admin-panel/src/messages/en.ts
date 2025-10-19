@@ -1,176 +1,357 @@
+// src/locales/en.ts
+
 export const en = {
   translation: {
+    "/": "/",
+    ":": ":",
+    HH: "HH",
+    "HH:mm": "HH:mm",
+
+    // 🧩 Common / Global
+    common: {
+      yes: "Yes",
+      no: "No",
+      ok: "OK",
+      cancel: "Cancel",
+      close: "Close",
+      confirm: "Confirm",
+      loading: "Loading...",
+      search: "Search",
+      clear: "Clear",
+      back: "Back",
+      next: "Next",
+      previous: "Previous",
+      save: "Save",
+      submit: "Submit",
+      edit: "Edit",
+      create: "Create",
+      delete: "Delete",
+      apply: "Apply",
+      reset: "Reset",
+      upload: "Upload",
+      uploading: "Uploading...",
+      uploaded: "Uploaded",
+      actions: "Actions",
+      view: "View",
+      details: "Details",
+      filter: "Filter",
+      filters: "Filters",
+      all: "All",
+      none: "None",
+      more: "More",
+      noneFound: "No results",
+      notAvailable: "N/A"
+    },
+
+    // 🌍 Global
     global: {
+      appName: "SmartStudy",
       name: "Smart Study",
       overview: "Overview",
       description: "Description",
+      adminPanel: "Admin Panel",
       adminPannel: "Admin Panel",
       language: "Language",
+      websiteDescription: "Website description",
+      close: "Close",
+      platform: "Platform",
+      nextSlide: "Next",
+      previousSlide: "Previous"
+    },
+
+    // 🧭 Navigation
+    nav: {
+      home: "Home",
+      dashboard: "Dashboard",
+      settings: "Settings",
+      profile: "Profile",
+      users: "Users",
+      teachers: "Teachers",
+      students: "Students",
+      logout: "Logout",
+      login: "Login",
+      register: "Register"
+    },
+
+    // 🔐 Auth
+    auth: {
       loginTitle: "Login",
       loginSubtitle: "Enter your credentials",
-      otpTitle: "Enter OTP",
-      otpSubtitle: "We sent a verification code",
-      passwordTitle: "Forgot Password",
-      passwordSubtitle: "Enter your email to recover password",
-      resetTitle: "Reset Password",
-      newPasswordTitle: "New Password",
-      newPasswordSubtitle: "Set your new password",
-      websiteDescription: "Website description"
+      signIn: "Sign in",
+      signOut: "Sign out",
+      signUp: "Sign up",
+      forgotPassword: "Forgot password?",
+      resetPassword: "Reset Password",
+      newPassword: "New Password",
+      changePassword: "Change Password",
+      labels: {
+        email: "Email",
+        password: "Password",
+        otp: "OTP",
+        rememberMe: "Remember me"
+      },
+      errors: {
+        emailRequired: "Email is required",
+        invalidEmail: "Invalid email",
+        invalidOTP: "Invalid OTP",
+        onlyDigits: "Only digits are allowed",
+        otpRequired: "OTP is required",
+        passwordLength: "Password must be between 8 and 100 characters",
+        passwordMismatch: "Passwords do not match",
+        passwordPattern: "Password does not meet pattern",
+        passwordRequired: "Password is required",
+        invalidPassword: "Invalid password",
+        tooShort: "Value is too short",
+        tooLong: "Value is too long"
+      },
+      forgetPassword: {
+        backToLogin: "Back to login",
+        email: "Email",
+        send: "Send"
+      },
+      loginForm: {
+        email: "Email",
+        login: "Login",
+        password: "Password",
+        remember: "Remember me"
+      },
+      otpForm: {
+        codeSentAt: "Code sent at {{time}}",
+        resend: "Resend",
+        resendAvialible: "Resend available in {{seconds}}s",
+        verify: "Verify"
+      }
     },
 
-    dataTable: {
-      loading: "Loading...",
-      noData: "No data",
-      all: "All",
-      clear: "Clear",
-      search: "Search"
-    },
-
+    // 🧾 Admin menu
     admin: {
       menu: {
+        "academic-calendar": "Academic calendar",
         dashboard: "Dashboard",
-        teachers: "Teachers",
+        groups: "Groups",
+        menu: "Menu",
+        students: "Students",
+        teachers: "Teachers"
+      }
+    },
+
+    // ✅ Confirm dialogs
+    confirmDialog: {
+      areYouSure: "Are you sure?",
+      cancel: "Cancel",
+      confirm: "Confirm",
+      confirmAction: "Confirm Action",
+      confirmDescription: "Are you sure you want to continue?",
+      delete: "Delete",
+      deleteDescription: "This action is permanent"
+    },
+
+    // 🧮 Data table
+    dataTable: {
+      actions: "Actions",
+      all: "All",
+      clear: "Clear",
+      clearAll: "Clear all",
+      clearFilters: "Clear filters",
+      delete: "Delete",
+      edit: "Edit",
+      filters: "Filters",
+      loading: "Loading...",
+      max: "Max",
+      min: "Min",
+      noData: "No data",
+      noResults: "No results",
+      rowsPerPage: "Rows per page",
+      search: "Search",
+      select: "Select",
+      selectAll: "Select all",
+      itemsSelected: "{{count}} selected",
+      page: "Page",
+      of: "of",
+      itemsPerPage: "items per page"
+    },
+
+    // 🧰 Form actions
+    formActions: {
+      cancel: "Cancel",
+      close: "Close",
+      create: "Create",
+      dangerZone: "Danger zone",
+      delete: "Delete",
+      requiredFields: "Required fields",
+      save: "Save",
+      saveChanges: "Save changes",
+      saving: "Saving..."
+    },
+
+    // 🧑‍🏫 Teacher + Student menus
+    teacher: {
+      menu: {
+        dashboard: "Dashboard",
+        groups: "Groups",
+        menu: "Menu",
         students: "Students"
       }
     },
 
-    menu: {
-      notFound: "Not Found",
-      dashboard: "Dashboard",
-      teachers: "Teachers",
-      students: "Students"
-    },
-
-    headers: {
-      areYouSure: "Are you sure?",
-      deleteDescription: "This action cannot be undone.",
-      cancel: "Cancel",
-      delete: "Delete"
-    },
-
-    confirmDialog: {
-      areYouSure: "Are you sure?",
-      confirmAction: "Confirm Action",
-      deleteDescription: "This action will be permanently removed."
-    },
-
-    toast: {
-      saved: "Saved Successfully",
-      settings: {
-        saved: "Settings saved successfully"
-      },
-      failed: "Operation Failed",
-      operation: {
-        failed: "Operation failed",
-        successful: "Operation successful"
-      },
-      data: {
-        synced: "Data Synchronized"
-      },
-      error: "Error",
-      network: {
-        error: "Please check your internet connection and try again."
-      },
-      validation: {
-        error: "Validation Error"
-      },
-      added: "Added Successfully",
-      updated: "Updated Successfully",
-      deleted: "Deleted Successfully",
-      warning: "Warning"
-    },
-
-    ui: {
-      languageErrorTooltip: "{{count}} {{error}} in {{language}} {{context}}",
-      error: "error",
-      errors: "errors",
-      metadata: "Metadata",
-      hasValidationErrors: "Has validation errors",
-      language: "Language"
-    },
-
-    auth: {
-      errors: {
-        emailRequired: "Email is required",
-        invalidEmail: "Invalid email",
-        onlyDigits: "Only digits are allowed",
-        otpRequired: "OTP must be 4 digits",
-        invalidPassword: "Invalid password"
+    student: {
+      menu: {
+        "ai-assistant": "AI Assistant",
+        dashboard: "Dashboard",
+        groups: "Groups",
+        menu: "Menu",
+        tests: "Tests"
       }
     },
 
-    notFound: {
-      resourceOfGiven: "Resource of given path",
-      pageNotFound: "Page Not Found",
-      cannotBeFound: "cannot be found",
-      navigateBack: "Navigate Back"
+    // 🏆 Hero section
+    hero: {
+      badge: "AI-powered platform",
+      imageAlt: "Hero image",
+      subtitle:
+        "SmartStudy combines education and technology to create personalized learning experiences.",
+      title: "Smart teaching powered by AI",
+      primaryButton: "Get started",
+      secondaryButton: "Learn more"
     },
 
-    pages: {
-      dashboard: "Dashboard"
-    },
-    header: {
-      logo: "SmartStudy",
-      nav: {
-        home: "Home",
-        features: "Features",
-        about: "About",
-        contact: "Contact"
-      },
-      ctaButton: "Get Started"
-    },
-    hero: {
-      badge: "AI-Powered Platform",
-      title: "Smarter Learning with Artificial Intelligence",
-      subtitle:
-        "SmartStudy combines education and technology to create a personalized learning experience that adapts to each student’s progress and style.",
-      primaryButton: "Get Started"
-    },
     heroStats: {
-      activeUsers: "500K+ Active Users",
-      aiEnhanced: "AI-Enhanced"
+      activeUsers: "500K+ active users",
+      aiEnhanced: "AI-enhanced"
     },
-    about: {
-      badge: "Innovative Education Technology",
-      title: "AI-Enhanced Textbooks for Modern Students",
-      paragraph1:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      paragraph2:
-        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      paragraph3:
-        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
-    },
+
+    // 📚 Features section
     features: {
-      sectionTitle: "Core Features",
+      sectionTitle: "Key features",
+      sectionSubtitle: "Explore what we offer",
       feature1: {
-        title: "Smart School Book",
+        title: "Smart gradebook",
         description:
-          "Manage student performance and grades through a modern digital school book system."
+          "Manage student results and evaluations with a modern digital gradebook."
       },
       feature2: {
-        title: "AI Assistance",
+        title: "AI assistance",
         description:
-          "Our AI helps identify weaknesses and recommends tailored learning paths."
+          "Our AI helps identify weak spots and suggests personalized study paths."
       },
       feature3: {
-        title: "Global Access",
+        title: "Global access",
         description:
-          "Connect with students and teachers anywhere through a cloud-based platform."
+          "Connect with students and teachers anywhere via cloud platform."
       },
       feature4: {
-        title: "Interactive Content",
+        title: "Interactive content",
         description:
           "Engage students with interactive and dynamic lessons powered by AI."
       },
       feature5: {
-        title: "Smart Assistance",
+        title: "Smart tutor",
         description:
-          "Our AI assistant guides students, helping them achieve their learning goals efficiently."
+          "Our AI assistant guides students to reach learning goals effectively."
       }
     },
+
+    // 🧍 Roles
+    roles: {
+      admin: "Admin",
+      teacher: "Teacher",
+      student: "Student",
+      guest: "Guest"
+    },
+
+    // 📥 Upload / media
+    upload: {
+      chooseFile: "Choose file",
+      dropFiles: "Drop files here or click to upload",
+      invalidType: "Invalid file type",
+      tooLarge: "File is too large"
+    },
+
+    mediaUploader: {
+      dropOrBrowse: "Drop files here or browse",
+      invalidType: "Invalid file type",
+      max: "Maximum file size exceeded",
+      replace: "Replace",
+      tryAgain: "Try again",
+      upload: "Upload",
+      uploadError: "Upload error",
+      uploadImage: "Upload image",
+      uploadImageFile: "Upload image file",
+      uploading: "Uploading..."
+    },
+
+    // 📄 Not found
+    notFound: {
+      pageNotFound: "Page not found",
+      resourceOfGiven: "Resource of given path",
+      cannotBeFound: "cannot be found",
+      navigateBack: "Navigate back",
+      goHome: "Go to home"
+    },
+
+    // ⚙️ Settings
+    settings: {
+      general: "General",
+      account: "Account",
+      notifications: "Notifications",
+      appearance: "Appearance",
+      saveSuccess: "Settings saved"
+    },
+
+    // 💬 Toast messages
+    toast: {
+      added: "Added successfully",
+      updated: "Updated successfully",
+      deleted: "Deleted successfully",
+      saved: "Saved successfully",
+      failed: "Operation failed",
+      success: "Success",
+      warning: "Warning",
+      info: "Info",
+      data: { synced: "Data synchronized" },
+      error: "Error",
+      network: {
+        error: "Please check your internet connection and try again."
+      },
+      validation: { error: "Validation error" },
+      operation: {
+        failed: "Operation failed",
+        successful: "Operation successful"
+      },
+      settings: { saved: "Settings saved successfully" }
+    },
+
+    // 🧱 UI
+    ui: {
+      author: "Author",
+      created: "Created",
+      updated: "Updated",
+      metadata: "Metadata",
+      languageErrorTooltip: "{{count}} {{error}} in {{language}} {{context}}",
+      error: "error",
+      errors: "errors",
+      hasValidationErrors: "Has validation errors",
+      back: "Back",
+      next: "Next",
+      previous: "Previous",
+      save: "Save",
+      submit: "Submit",
+      edit: "Edit",
+      create: "Create",
+      cancel: "Cancel",
+      apply: "Apply",
+      reset: "Reset",
+      viewAll: "View all",
+      showMore: "Show more",
+      showLess: "Show less",
+      loadingMore: "Loading more..."
+    },
+
     footer: {
-      copyright: "© {{year}} SmartStudy — All Rights Reserved.",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      copyright: "© {{year}} SmartStudy — All rights reserved.",
+      description: "SmartStudy — personalized learning with AI."
     }
   }
 };
+
+export default en;
