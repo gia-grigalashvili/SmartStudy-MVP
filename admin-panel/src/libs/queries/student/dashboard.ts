@@ -4,11 +4,10 @@ import { useQuery } from "react-query";
 
 export const useGetDashboard = () => {
   return useQuery<DashboardResponse, Error>({
-    queryKey: ["dashboard",],
+    queryKey: ["dashboard"],
     queryFn: async (): Promise<DashboardResponse> => {
-      const { data } = await instance.get<DashboardResponse>(
-        "/dashboard"
-      );
+      const { data } =
+        await instance.get<DashboardResponse>("/student/dashboard");
       return data;
     },
     refetchOnMount: true,

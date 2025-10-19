@@ -3,6 +3,7 @@ export interface DashboardResponse {
 }
 
 export interface Dashboard {
+  studentStatistic: any;
   studentStatistics: StudentStatistic;
   totalTasks: number;
   completedTasks: number;
