@@ -10,9 +10,9 @@ import {
   createPassword,
 } from "@/utils";
 import { Prisma } from "@prisma/client";
-import { CreateTeacherDTO, UpdateTeacherDTO } from "@/types/admin";
+import { CreateStudentDTO, UpdateStudentDTO } from "@/types/admin";
 
-export const fetchTeachers = async (
+export const fetchStudents = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -20,7 +20,7 @@ export const fetchTeachers = async (
   try {
     const { skip, take, orderBy, search } = getPaginationAndFilters(req);
 
-    const where = generateWhereInput<Prisma.TeacherWhereInput>(search, {
+    const where = generateWhereInput<Prisma.StudentWhereInput>(search, {
       "translations.some.firstName": "insensitive",
       "translations.some.fullName": "insensitive",
       "translations.some.lastName": "insensitive",
@@ -29,8 +29,8 @@ export const fetchTeachers = async (
       personalId: "insensitive",
     });
 
-    const [teachers, count] = await Promise.all([
-      prisma.teacher.findMany({
+    const [students, count] = await Promise.all([
+      prisma.student.findMany({
         where,
         skip,
         take,
@@ -47,16 +47,16 @@ export const fetchTeachers = async (
           },
         },
       }),
-      prisma.teacher.count({ where }),
+      prisma.student.count({ where }),
     ]);
 
-    return res.status(200).json({ data: teachers, count });
+    return res.status(200).json({ data: students, count });
   } catch (error) {
     next(error);
   }
 };
 
-export const fetchTeacher = async (
+export const fetchStudent = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -64,7 +64,7 @@ export const fetchTeacher = async (
   try {
     const { id } = req.params;
 
-    const teacher = await prisma.teacher.findUnique({
+    const student = await prisma.student.findUnique({
       where: {
         id,
       },
@@ -81,30 +81,30 @@ export const fetchTeacher = async (
       },
     });
 
-    if (!teacher) {
+    if (!student) {
       return sendError(req, res, 404, "userNotFound");
     }
 
-    return res.status(200).json({ data: teacher });
+    return res.status(200).json({ data: student });
   } catch (error) {
     next(error);
   }
 };
 
-export const deleteTeacher = async (
+export const deleteStudent = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const { id } = req.params;
-    const teacher = await prisma.teacher.delete({
+    const student = await prisma.student.delete({
       where: {
         id,
       },
     });
 
-    if (!teacher) {
+    if (!student) {
       return sendError(req, res, 404, "userNotFound");
     }
 
@@ -116,27 +116,33 @@ export const deleteTeacher = async (
   }
 };
 
-export const createTeacher = async (
+export const createStudent = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { translations, dateOfBirth, email, password, personalId } =
-      req.body as CreateTeacherDTO;
+    const {
+      translations,
+      dateOfBirth,
+      email,
+      password,
+      personalId,
+      class: classNumber,
+    } = req.body as CreateStudentDTO;
 
-    const sameTeacher = await prisma.teacher.count({
+    const sameStudent = await prisma.student.count({
       where: {
         email,
         personalId,
       },
     });
-    if (sameTeacher) {
+    if (sameStudent) {
       return sendError(req, res, 400, "userAlreadyExists");
     }
 
     const translationsToCreate = Prisma.validator<
-      Prisma.TeacherTranslationCreateWithoutTeacherInput[]
+      Prisma.StudentTranslationCreateWithoutStudentInput[]
     >()(createTranslations(translations) as any);
 
     let age: number | null;
@@ -148,11 +154,12 @@ export const createTeacher = async (
 
     const passwordHash = await createPassword(password);
 
-    const teacher = await prisma.teacher.create({
+    const student = await prisma.student.create({
       data: {
         dateOfBirth,
         email,
         personalId,
+        ...(!!classNumber ? { class: classNumber } : {}),
         age,
         passwordHash,
         translations: { create: translationsToCreate },
@@ -160,14 +167,14 @@ export const createTeacher = async (
     });
 
     return res.status(201).json({
-      data: teacher,
+      data: student,
     });
   } catch (error) {
     next(error);
   }
 };
 
-export const updateTeacher = async (
+export const updateStudent = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -175,10 +182,15 @@ export const updateTeacher = async (
   try {
     const { id } = req.params;
 
-    const { translations, dateOfBirth, email, personalId } =
-      req.body as UpdateTeacherDTO;
+    const {
+      translations,
+      dateOfBirth,
+      email,
+      personalId,
+      class: classNumber,
+    } = req.body as UpdateStudentDTO;
 
-    const sameTeacher = await prisma.teacher.count({
+    const sameStudent = await prisma.student.count({
       where: {
         email,
         personalId,
@@ -187,7 +199,7 @@ export const updateTeacher = async (
         },
       },
     });
-    if (sameTeacher) {
+    if (sameStudent) {
       return sendError(req, res, 400, "userAlreadyExists");
     }
 
@@ -199,20 +211,20 @@ export const updateTeacher = async (
     }
 
     const translationsToCreate = Prisma.validator<
-      Prisma.TeacherTranslationCreateWithoutTeacherInput[]
+      Prisma.StudentTranslationCreateWithoutStudentInput[]
     >()(createTranslations(translations) as any);
 
-    const findTeacher = await prisma.teacher.findUnique({
+    const findStudent = await prisma.student.findUnique({
       where: {
         id,
       },
     });
 
-    if (!findTeacher) {
+    if (!findStudent) {
       return sendError(req, res, 404, "userNotFound");
     }
 
-    const teacher = await prisma.teacher.update({
+    const student = await prisma.student.update({
       where: {
         id,
       },
@@ -222,6 +234,7 @@ export const updateTeacher = async (
           create: translationsToCreate,
         },
         age,
+        ...(!!classNumber ? { class: classNumber } : {}),
         dateOfBirth,
         email,
         personalId,
@@ -229,7 +242,7 @@ export const updateTeacher = async (
     });
 
     return res.json({
-      data: teacher,
+      data: student,
     });
   } catch (error) {
     next(error);
