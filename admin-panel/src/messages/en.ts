@@ -64,7 +64,7 @@ export const en = {
         failed: "Operation failed",
         successful: "Operation successful"
       },
-      "data": {
+      data: {
         synced: "Data Synchronized"
       },
       error: "Error",
@@ -108,6 +108,69 @@ export const en = {
 
     pages: {
       dashboard: "Dashboard"
+    },
+    header: {
+      logo: "SmartStudy",
+      nav: {
+        home: "Home",
+        features: "Features",
+        about: "About",
+        contact: "Contact"
+      },
+      ctaButton: "Get Started"
+    },
+    hero: {
+      badge: "AI-Powered Platform",
+      title: "Smarter Learning with Artificial Intelligence",
+      subtitle:
+        "SmartStudy combines education and technology to create a personalized learning experience that adapts to each student’s progress and style.",
+      primaryButton: "Get Started"
+    },
+    heroStats: {
+      activeUsers: "500K+ Active Users",
+      aiEnhanced: "AI-Enhanced"
+    },
+    about: {
+      badge: "Innovative Education Technology",
+      title: "AI-Enhanced Textbooks for Modern Students",
+      paragraph1:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      paragraph2:
+        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      paragraph3:
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+    },
+    features: {
+      sectionTitle: "Core Features",
+      feature1: {
+        title: "Smart School Book",
+        description:
+          "Manage student performance and grades through a modern digital school book system."
+      },
+      feature2: {
+        title: "AI Assistance",
+        description:
+          "Our AI helps identify weaknesses and recommends tailored learning paths."
+      },
+      feature3: {
+        title: "Global Access",
+        description:
+          "Connect with students and teachers anywhere through a cloud-based platform."
+      },
+      feature4: {
+        title: "Interactive Content",
+        description:
+          "Engage students with interactive and dynamic lessons powered by AI."
+      },
+      feature5: {
+        title: "Smart Assistance",
+        description:
+          "Our AI assistant guides students, helping them achieve their learning goals efficiently."
+      }
+    },
+    footer: {
+      copyright: "© {{year}} SmartStudy — All Rights Reserved.",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     }
   }
 };

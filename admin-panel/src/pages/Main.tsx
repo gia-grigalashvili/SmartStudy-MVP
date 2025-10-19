@@ -34,7 +34,7 @@ const Main: React.FC = () => {
 
 export const MainNavigationRoute = {
   element: <Main />,
-  path: "/"
+  path: "/cms"
 };
 
 export default Main;
