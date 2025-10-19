@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { toUpperCase } from "@/utils";
-import { LanguageChanger } from "../ui";
+import { LanguageChanger, ThemeSwitcher } from "../ui";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSidebarStore } from "@/store";
@@ -58,6 +58,7 @@ export const Header: React.FC = () => {
           </motion.div>
 
           <LanguageChanger />
+          <ThemeSwitcher />
         </div>
       </motion.header>
     </motion.div>

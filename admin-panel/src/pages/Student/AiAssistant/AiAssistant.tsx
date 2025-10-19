@@ -1,6 +1,4 @@
-const AiAssistant = () => {
-  return <div>Ai Assistant</div>;
-};
+import AiAssistant from "../../../components/AiAssistant/AiAssistant";
 
 export const StudentAiAssistantNavigationRoute = {
   element: <AiAssistant />,
