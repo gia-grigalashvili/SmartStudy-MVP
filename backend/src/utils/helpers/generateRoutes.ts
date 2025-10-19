@@ -3,7 +3,17 @@ import * as AdminRoutes from "@/routes/admin";
 import * as StudentRoutes from "@/routes/student";
 import * as TeacherRoutes from "@/routes/teacher";
 
-const adminRouteList = [{ path: "/auth", router: AdminRoutes.adminAuthRouter }];
+const adminRouteList = [
+  { path: "/auth", router: AdminRoutes.adminAuthRouter },
+  {
+    path: "academic-calendar",
+    router: AdminRoutes.adminAcademicCalendarRouter,
+  },
+  { path: "group", router: AdminRoutes.adminGroupRouter },
+  { path: "student", router: AdminRoutes.adminStudentRouter },
+  { path: "subject", router: AdminRoutes.adminSubjectRouter },
+  { path: "teacher", router: AdminRoutes.adminTeacherRouter },
+];
 
 const studentRouteList = [
   { path: "/auth", router: StudentRoutes.studentAuthRouter },
@@ -15,6 +25,8 @@ const studentRouteList = [
 const teacherRouteList = [
   { path: "/auth", router: TeacherRoutes.teacherAuthRouter },
   { path: "/student", router: TeacherRoutes.teacherStudentRouter },
+  { path: "/group", router: TeacherRoutes.teacherGroupRouter },
+  { path: "/quiz", router: TeacherRoutes.teacherQuizRouter },
 ];
 
 export const generateRoutes = (app: Express) => {

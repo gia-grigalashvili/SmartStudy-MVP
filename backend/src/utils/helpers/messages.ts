@@ -8,6 +8,14 @@ export const errorMessages = {
     en: "Group not found",
     ka: "ჯგუფი ვერ მოიძებნა",
   },
+  quizNotFound: {
+    en: "Quiz not found",
+    ka: "ქვიზი ვერ მოიძებნა",
+  },
+  quizResultNotFound: {
+    en: "Quiz result not found",
+    ka: "ქვიზის შედეგი ვერ მოიძებნა",
+  },
   academicCalendarNotFound: {
     en: "Academic Calendar not found",
     ka: "აკადემიური კალენდარი ვერ მოიძებნა",
@@ -121,6 +129,14 @@ export const errorMessages = {
   groupDeleted: {
     en: "Group deleted successfully",
     ka: "ჯგუფი წარმატებით წაიშალა",
+  },
+  quizDeleted: {
+    en: "Quiz deleted successfully",
+    ka: "ქვიზი წარმატებით წაიშალა",
+  },
+  quizResultDeleted: {
+    en: "Quiz result deleted successfully",
+    ka: "ქვიზის შედეგი წარმატებით წაიშალა",
   },
   academicCalendarDeleted: {
     en: "Academic Calendar deleted successfully",
