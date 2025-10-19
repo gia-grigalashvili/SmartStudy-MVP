@@ -19,9 +19,9 @@ export const fetchGroups = async (
 
     const where = generateWhereInput<Prisma.GroupWhereInput>(search, {
       code: "insensitive",
-      semester: "insensitive",
       "teacher.translations.some.firstName": "insensitive",
       "teacher.translations.some.lastName": "insensitive",
+      "subjects.some.subject.translations.some.name": "insensitive",
     });
 
     const [groups, count] = await Promise.all([

@@ -49,3 +49,4 @@ export * from "./toggle";
 export * from "./toggle-group";
 export * from "./collapsible";
 export * from "./sheet";
+export * from "./ThemeSwitcher";
