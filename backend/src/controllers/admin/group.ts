@@ -1,0 +1,292 @@
+import { prisma } from "@/config";
+import { NextFunction, Response, Request } from "express";
+import {
+  getResponseMessage,
+  sendError,
+  generateWhereInput,
+  getPaginationAndFilters,
+} from "@/utils";
+import { Prisma } from "@prisma/client";
+import { CreateGroupDTO, UpdateGroupDTO } from "@/types/admin";
+
+export const fetchGroups = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { skip, take, orderBy, search } = getPaginationAndFilters(req);
+
+    const where = generateWhereInput<Prisma.GroupWhereInput>(search, {
+      code: "insensitive",
+      semester: "insensitive",
+      "teacher.translations.some.firstName": "insensitive",
+      "teacher.translations.some.lastName": "insensitive",
+    });
+
+    const [groups, count] = await Promise.all([
+      prisma.group.findMany({
+        where,
+        skip,
+        take,
+        orderBy,
+        include: {
+          subjects: {
+            select: {
+              id: true,
+              subject: {
+                select: {
+                  translations: {
+                    include: {
+                      language: {
+                        select: {
+                          code: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          teacher: {
+            select: {
+              id: true,
+              translations: {
+                include: {
+                  language: {
+                    select: {
+                      code: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          academicCalendar: {
+            include: {
+              AcademicYear: true,
+            },
+          },
+          academicYear: true,
+        },
+      }),
+      prisma.group.count({ where }),
+    ]);
+
+    return res.status(200).json({ data: groups, count });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const fetchGroup = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    const group = await prisma.group.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        subjects: {
+          select: {
+            id: true,
+            subject: {
+              select: {
+                translations: {
+                  include: {
+                    language: {
+                      select: {
+                        code: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        teacher: {
+          select: {
+            id: true,
+            translations: {
+              include: {
+                language: {
+                  select: {
+                    code: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        academicCalendar: {
+          include: {
+            AcademicYear: true,
+          },
+        },
+        academicYear: true,
+      },
+    });
+
+    if (!group) {
+      return sendError(req, res, 404, "groupNotFound");
+    }
+
+    return res.status(200).json({ data: group });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteGroup = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const group = await prisma.group.delete({
+      where: {
+        id,
+      },
+    });
+
+    if (!group) {
+      return sendError(req, res, 404, "groupNotFound");
+    }
+
+    return res.status(200).json({
+      message: getResponseMessage("groupDeleted"),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createGroup = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const {
+      academicYearId,
+      code,
+      semester,
+      subjects,
+      teacherId,
+      academicCalendarId,
+    } = req.body as CreateGroupDTO;
+
+    const sameGroup = await prisma.group.count({
+      where: {
+        code,
+      },
+    });
+    if (sameGroup) {
+      return sendError(req, res, 400, "groupAlreadyExists");
+    }
+
+    const group = await prisma.group.create({
+      data: {
+        code,
+        semester,
+        subjects: {
+          connect: subjects.map((subjectId) => ({ id: subjectId })),
+        },
+        academicYear: {
+          connect: { id: academicYearId },
+        },
+        teacher: {
+          connect: { id: teacherId },
+        },
+        academicCalendar: {
+          connect: { id: academicCalendarId },
+        },
+      },
+    });
+
+    return res.status(201).json({
+      data: group,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateGroup = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    const {
+      academicYearId,
+      code,
+      semester,
+      subjects,
+      teacherId,
+      academicCalendarId,
+    } = req.body as UpdateGroupDTO;
+
+    const sameGroup = await prisma.group.count({
+      where: {
+        code,
+        id: {
+          not: id,
+        },
+      },
+    });
+    if (sameGroup) {
+      return sendError(req, res, 400, "groupAlreadyExists");
+    }
+
+    const findGroup = await prisma.group.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!findGroup) {
+      return sendError(req, res, 404, "groupNotFound");
+    }
+
+    const group = await prisma.group.update({
+      where: {
+        id,
+      },
+      data: {
+        ...(academicCalendarId && {
+          academicCalendar: {
+            connect: { id: academicCalendarId },
+          },
+        }),
+        academicYear: {
+          connect: { id: academicYearId },
+        },
+        code,
+        semester,
+        subjects: {
+          set: subjects.map((subjectId) => ({ id: subjectId })),
+        },
+        teacher: {
+          connect: { id: teacherId },
+        },
+      },
+    });
+
+    return res.json({
+      data: group,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
