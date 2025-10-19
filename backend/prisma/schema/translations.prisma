@@ -56,3 +56,21 @@ model StudentTranslation {
   @@unique([studentId, languageId])
   @@map("student_translations")
 }
+
+model SubjectTranslation {
+  id String @id @default(uuid(7)) @db.Uuid
+
+  name String
+
+  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+  languageId String   @db.Uuid
+
+  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  subjectId String  @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([languageId, subjectId])
+  @@map("subject_translations")
+}

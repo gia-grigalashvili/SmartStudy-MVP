@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { JSX, useState } from 'react';
 import { Send, BookOpen, Sparkles } from 'lucide-react';
 
 interface Message {

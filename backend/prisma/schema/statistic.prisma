@@ -1,0 +1,19 @@
+model StudentStatistic {
+  id String @id @default(uuid(7)) @db.Uuid
+
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId String  @db.Uuid
+
+  month          Int
+  year           Int
+  askedQuestions Int
+  learningHours  Float
+  averageScore   Float
+  passedTests    Int
+  weekProgress   Float
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([studentId, month, year])
+  @@map("student_statistics")
+}
