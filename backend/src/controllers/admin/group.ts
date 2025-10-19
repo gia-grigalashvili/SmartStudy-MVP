@@ -36,6 +36,7 @@ export const fetchGroups = async (
               id: true,
               subject: {
                 select: {
+                  id: true,
                   translations: {
                     include: {
                       language: {
@@ -93,6 +94,7 @@ export const fetchGroup = async (
             id: true,
             subject: {
               select: {
+                id: true,
                 translations: {
                   include: {
                     language: {
@@ -284,6 +286,146 @@ export const updateGroup = async (
     return res.json({
       data: updatedGroup,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const fetchSubjectsList = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { skip, take, orderBy, search } = getPaginationAndFilters(req);
+
+    const where = generateWhereInput<Prisma.SubjectWhereInput>(search, {
+      "translations.some.name": "insensitive",
+      code: "insensitive",
+    });
+
+    const [subjects] = await Promise.all([
+      prisma.subject.findMany({
+        skip,
+        take,
+        orderBy,
+        where,
+        select: {
+          id: true,
+          translations: {
+            select: {
+              language: {
+                select: {
+                  code: true,
+                },
+              },
+              languageId: true,
+              name: true,
+            },
+          },
+        },
+      }),
+    ]);
+
+    const subjectsOptions = subjects.map((subject) => ({
+      label: subject?.translations[0].name,
+      value: subject.id,
+    }));
+
+    return res.status(200).json({ data: subjectsOptions });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const fetchTeachersList = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { skip, take, orderBy, search } = getPaginationAndFilters(req);
+
+    const where = generateWhereInput<Prisma.TeacherWhereInput>(search, {
+      "translations.some.firstName": "insensitive",
+      "translations.some.lastName": "insensitive",
+      "translations.some.fullName": "insensitive",
+      email: "insensitive",
+      personalId: "insensitive",
+    });
+
+    const [teachers] = await Promise.all([
+      prisma.teacher.findMany({
+        skip,
+        take,
+        orderBy,
+        where,
+        select: {
+          id: true,
+          translations: {
+            select: {
+              language: {
+                select: {
+                  code: true,
+                },
+              },
+              languageId: true,
+              firstName: true,
+              lastName: true,
+            },
+          },
+        },
+      }),
+    ]);
+
+    const teachersOptions = teachers.map((teacher) => ({
+      label: `${teacher?.translations[0]?.firstName} ${teacher?.translations[0]?.lastName}`,
+      value: teacher.id,
+    }));
+
+    return res.status(200).json({ data: teachersOptions });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const fetchAcademicCalendarsList = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { skip, take, orderBy, search } = getPaginationAndFilters(req);
+
+    const where = generateWhereInput<Prisma.AcademicCalendarWhereInput>(
+      search,
+      {
+        year: "insensitive",
+      }
+    );
+
+    const [academicCalendars] = await Promise.all([
+      prisma.academicCalendar.findMany({
+        skip,
+        take,
+        orderBy,
+        where,
+        select: {
+          id: true,
+          year: true,
+          semester: true,
+        },
+      }),
+    ]);
+
+    const academicCalendarsOptions = academicCalendars.map(
+      (academicCalendar) => ({
+        label: `${academicCalendar.year} - ${academicCalendar.semester}`,
+        value: academicCalendar.id,
+      })
+    );
+
+    return res.status(200).json({ data: academicCalendarsOptions });
   } catch (error) {
     next(error);
   }
