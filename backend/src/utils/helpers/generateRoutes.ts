@@ -14,6 +14,7 @@ const studentRouteList = [
 const teacherRouteList = [
   { path: "/auth", router: TeacherRoutes.teacherAuthRouter },
   { path: "/student", router: TeacherRoutes.teacherStudentRouter },
+  { path: "/group", router: TeacherRoutes.teacherGroupRouter },
 ];
 
 export const generateRoutes = (app: Express) => {
