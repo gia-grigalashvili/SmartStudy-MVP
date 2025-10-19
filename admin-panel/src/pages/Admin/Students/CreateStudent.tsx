@@ -1,22 +1,22 @@
 import { useSearchParams } from "react-router-dom";
-import { GroupForm } from "@/components/forms/PageComponents";
+import { StudentForm } from "@/components/forms/PageComponents";
 
-const CreateGroup = () => {
+const CreateStudent = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
 
   return (
-    <GroupForm
+    <StudentForm
       mode="create"
       id={id}
-      onSuccessNavigate="/administration/student"
+      onSuccessNavigate="/administration/students"
     />
   );
 };
 
 export const CreateStudentNavigationRoute = {
-  element: <CreateGroup />,
-  path: "/student/create"
+  element: <CreateStudent />,
+  path: "/students/create"
 };
 
-export default CreateGroup;
+export default CreateStudent;

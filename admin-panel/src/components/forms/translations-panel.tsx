@@ -56,7 +56,14 @@ export const TranslationsPanel = <T extends string = string>({
 interface FieldGroupProps {
   label: string;
   required?: boolean;
-  type?: "text" | "email" | "password" | "number" | "textarea" | "markdown";
+  type?:
+    | "text"
+    | "email"
+    | "password"
+    | "number"
+    | "textarea"
+    | "markdown"
+    | "date";
   placeholder?: string;
   value: string;
   onChange: (value: string) => void;
@@ -127,6 +134,23 @@ export const FieldGroup: React.FC<FieldGroupProps> = ({
                 {currentLength}/{maxLength}
               </div>
             )}
+          </>
+        ) : type === "date" ? (
+          <>
+            {/* Radix UI Date Picker */}
+            <div className="relative">
+              <input
+                id={inputId}
+                type="date"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                placeholder={placeholder}
+                disabled={disabled}
+                className={inputClasses}
+                aria-invalid={hasError}
+                aria-describedby={error ? `${inputId}-error` : undefined}
+              />
+            </div>
           </>
         ) : (
           <input

@@ -195,13 +195,26 @@ export function GenericEntityForm<
     }
   });
 
-  const onSubmit = handleSubmit(async (values: TForm) => {
-    if (internalMode === "create") {
-      await createMutation.mutateAsync(values);
-    } else if (internalMode === "edit") {
-      await updateMutation.mutateAsync(values);
+  const onSubmit = handleSubmit(
+    async (values: TForm) => {
+      if (internalMode === "create") {
+        await createMutation.mutateAsync(values);
+      } else if (internalMode === "edit") {
+        await updateMutation.mutateAsync(values);
+      }
+    },
+    (errors) => {
+      // If there are validation errors, scroll to the first error field
+      const firstErrorField = Object.keys(errors)[0];
+      if (firstErrorField) {
+        const el = document.querySelector(`[name="${firstErrorField}"]`);
+        if (el && typeof el.scrollIntoView === "function") {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          (el as HTMLElement).focus();
+        }
+      }
     }
-  });
+  );
 
   const isSubmitting = createMutation.isLoading || updateMutation.isLoading;
 
@@ -364,6 +377,33 @@ export function GenericEntityForm<
               form.setValue(
                 name as Path<TForm>,
                 Number(v) as unknown as PathValue<TForm, Path<TForm>>
+              )
+            }
+            placeholder={
+              f.props?.placeholder
+                ? t(f.props.placeholder as string)
+                : undefined
+            }
+            required={f.props?.required}
+            helperText={
+              f.props?.description ? t(f.props.description) : undefined
+            }
+            className={f.props?.fullWidth ? "mb-5 md:col-span-2" : "mb-5"}
+            error={(form.formState.errors as any)[name]?.message}
+          />
+        );
+      case "datePicker":
+        return (
+          <FieldGroup
+            key={name}
+            label={toUpperCase(t(label as string))}
+            type="date"
+            value={watchedValue ?? ""}
+            disabled={internalMode === "readonly"}
+            onChange={(v) =>
+              form.setValue(
+                name as Path<TForm>,
+                v as unknown as PathValue<TForm, Path<TForm>>
               )
             }
             placeholder={
