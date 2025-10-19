@@ -182,20 +182,36 @@ export const createGroup = async (
         code,
         year,
         semester,
+        teacher: { connect: { id: teacherId } },
+        academicCalendar: { connect: { id: academicCalendarId } },
+      },
+    });
+
+    const groupSubjects = await Promise.all(
+      subjects.map((subjectId) =>
+        prisma.groupSubject.create({
+          data: {
+            groupId: group.id,
+            subjectId,
+          },
+        })
+      )
+    );
+
+    const updatedGroup = await prisma.group.update({
+      where: { id: group.id },
+      data: {
         subjects: {
-          connect: subjects.map((subjectId) => ({ id: subjectId })),
+          set: groupSubjects.map((gs) => ({ id: gs.id })),
         },
-        teacher: {
-          connect: { id: teacherId },
-        },
-        academicCalendar: {
-          connect: { id: academicCalendarId },
-        },
+      },
+      include: {
+        subjects: true,
       },
     });
 
     return res.status(201).json({
-      data: group,
+      data: updatedGroup,
     });
   } catch (error) {
     next(error);
@@ -209,7 +225,6 @@ export const updateGroup = async (
 ) => {
   try {
     const { id } = req.params;
-
     const { code, semester, subjects, year, teacherId, academicCalendarId } =
       req.body as UpdateGroupDTO;
 
@@ -226,39 +241,48 @@ export const updateGroup = async (
     }
 
     const findGroup = await prisma.group.findUnique({
-      where: {
-        id,
-      },
+      where: { id },
     });
-
     if (!findGroup) {
       return sendError(req, res, 404, "groupNotFound");
     }
 
-    const group = await prisma.group.update({
-      where: {
-        id,
-      },
+    await prisma.groupSubject.deleteMany({ where: { groupId: id } });
+
+    const groupSubjects = await Promise.all(
+      subjects.map((subjectId) =>
+        prisma.groupSubject.create({
+          data: {
+            groupId: id,
+            subjectId,
+          },
+        })
+      )
+    );
+
+    const updatedGroup = await prisma.group.update({
+      where: { id },
       data: {
         ...(academicCalendarId && {
-          academicCalendar: {
-            connect: { id: academicCalendarId },
-          },
+          academicCalendar: { connect: { id: academicCalendarId } },
         }),
         code,
         year,
         semester,
         subjects: {
-          set: subjects.map((subjectId) => ({ id: subjectId })),
+          set: groupSubjects.map((gs) => ({ id: gs.id })),
         },
         teacher: {
           connect: { id: teacherId },
         },
       },
+      include: {
+        subjects: true,
+      },
     });
 
     return res.json({
-      data: group,
+      data: updatedGroup,
     });
   } catch (error) {
     next(error);
