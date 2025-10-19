@@ -13,6 +13,7 @@ import { AuthWrapper } from "./components/auth";
 import CustomLayout from "./components/Layout";
 import Main from "./pages/Main";
 import { useAuthStore } from "@/store";
+import Landing from "./pages/Landing/Landing";
 
 type AnyRoute = {
   path?: string;
@@ -72,8 +73,12 @@ export const Router = () => {
     ...createRoutes(TeacherRoutes, false, "/teacher"),
     ...createRoutes(AuthRoutes, true),
     {
-      path: "/",
+      path: "/cms",
       element: <MainRedirect />
+    },
+    {
+      path: "/",
+      element: <Landing />
     },
     {
       path: "*",

@@ -4,3 +4,4 @@ export * from "./Student";
 export * from "./Teacher";
 export * from "./NotFound";
 export * from "./Main";
+export * from "./Landing";
