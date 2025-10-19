@@ -25,7 +25,6 @@ export const fetchStudents = async (
       "translations.some.fullName": "insensitive",
       "translations.some.lastName": "insensitive",
       email: "insensitive",
-      age: "insensitive",
       personalId: "insensitive",
     });
 

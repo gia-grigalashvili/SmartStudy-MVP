@@ -21,12 +21,6 @@ export const useMenuItems = (): SidebarItem[] => {
   const items = {
     administration: [
       {
-        key: "dashboard",
-        href: "administration/dashboard",
-        icon: <Home className="h-5 w-5" />,
-        label: toUpperCase(t("admin.menu.dashboard"))
-      },
-      {
         key: "teachers",
         href: "administration/teachers",
         icon: <Users className="h-5 w-5" />,
@@ -78,12 +72,6 @@ export const useMenuItems = (): SidebarItem[] => {
       }
     ],
     teacher: [
-      {
-        key: "dashboard",
-        href: "teacher/dashboard",
-        icon: <Home className="h-5 w-5" />,
-        label: toUpperCase(t("teacher.menu.dashboard"))
-      },
       {
         key: "groups",
         href: "teacher/groups",
