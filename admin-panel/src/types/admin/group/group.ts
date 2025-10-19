@@ -1,4 +1,4 @@
-import { Teacher } from "../teacher";
+import { Teacher } from "../../teacher";
 import { Student } from "./Student";
 import { Subject } from "./subject";
 
@@ -12,7 +12,6 @@ export interface GroupResponse {
 }
 
 export interface Group {
-  name: string;
   id: string;
   code: string;
   semester: number;

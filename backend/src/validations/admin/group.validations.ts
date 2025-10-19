@@ -14,7 +14,7 @@ export const createGroupValidation = [
   body("year").isString().withMessage("invalidYear"),
   existanceValidation("group", "code"),
   body("semester").isInt().withMessage("invalidSemester"),
-  relationArrayValidation("subjects", "subject", { min: 1 }),
+  body("subjects").isArray().withMessage("invalidSubjects"),
   body("teacherId").isUUID().withMessage("invalidTeacherId"),
   body("academicCalendarId").isUUID().withMessage("invalidAcademicCalendarId"),
 ];
