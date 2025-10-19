@@ -1,4 +1,7 @@
+// types/ai.ts
+import React from 'react';
 
+type ReactI18NextChildren = string | number | React.ReactNode;
 
 export interface Message {
   role: 'user' | 'assistant' | 'system';

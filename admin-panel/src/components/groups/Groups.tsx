@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Users, Search, Calendar, BookOpen, Award, Clock, Loader2, ChevronRight } from 'lucide-react';
 import {  useGetGroups } from '@/libs/queries/student/groups';
 import { getPaginationFields } from "@/utils";
@@ -97,7 +97,7 @@ export default function Groups() {
             <div 
               key={group.id || index}
               className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer"
-              onClick={() => navigate(`/groups/${group.id}`)}
+              onClick={() => navigate(`/student/groups/${group.id}`)}
             >
              
               <div className="h-32 bg-gradient-to-br from-purple-500 via-purple-600 to-blue-600 relative">
