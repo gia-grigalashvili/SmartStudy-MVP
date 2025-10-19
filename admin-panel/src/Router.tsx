@@ -60,7 +60,7 @@ const MainRedirect: React.FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (isLoggedIn && userType) {
-      navigate(`/${userType}/dashboard`, { replace: true });
+      navigate(`/${userType}`, { replace: true });
     }
   }, [isLoggedIn, userType, navigate]);
   return <Main />;
