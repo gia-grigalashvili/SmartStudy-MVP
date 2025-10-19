@@ -229,7 +229,7 @@ export const SidebarContainer: React.FC<SideBarContainerProps> = ({
   handleItemClick
 }) => {
   return (
-    <div className="sidebar-menu-container">
+    <div className="sidebar-menu-container  flex-grow-1">
       <div className="sidebar-menu-list">
         <nav className="space-y-2 p-4">
           {items.map((item) => (

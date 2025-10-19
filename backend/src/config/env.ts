@@ -25,14 +25,14 @@ const envSchema = z.object({
   ADMIN_STAGE_JWT_SECRET: z.string().min(32),
   STUDENT_STAGE_JWT_SECRET: z.string().min(32),
   TEACHER_STAGE_JWT_SECRET: z.string().min(32),
-
+  
   // URLs
   CLIENT_URL: z.string().url(),
   ADMIN_URL: z.string().url(),
   SERVER_URL: z.string().url(),
   RESPONSE_URL: z.string().url(),
   COOKIE_DOMAIN: z.string(),
-
+  
   // Seeds
   SALT_ROUNDS: z.string(),
   ADMIN_PASSWORD: z.string(),
@@ -41,9 +41,11 @@ const envSchema = z.object({
   EMAIL: z.string().email(),
   ADMIN_FIRST_NAME: z.string(),
   ADMIN_LAST_NAME: z.string(),
-
+  
   // Email
   SENDGRID_API_KEY: z.string().min(1),
+  
+  GEMINI_API_KEY: z.string().min(1),
 });
 
 const parsed = envSchema.safeParse(process.env);

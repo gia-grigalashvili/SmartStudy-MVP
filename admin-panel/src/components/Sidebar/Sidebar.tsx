@@ -82,10 +82,11 @@ export const Sidebar: React.FC = () => {
   return (
     <TooltipProvider>
       <motion.div
-        className={cn(
-          "bg-sidebar text-sidebar-foreground border-sidebar-border sticky top-0 left-0 z-[50] hidden h-screen flex-col border-r transition-all duration-200 ease-out md:flex",
-          collapsed ? "w-[72px] min-w-[72px]" : "w-[240px] min-w-[240px]"
-        )}
+       className={cn(
+  "bg-gray-800 text-sidebar-foreground border-sidebar-border sticky top-0 left-0 z-[50] hidden h-screen flex-col border-r transition-all duration-200 ease-out md:flex",
+  collapsed ? "w-[72px] min-w-[72px]" : "w-[240px] min-w-[240px]"
+)}
+
         animate={{
           width: collapsed ? 72 : 240
         }}

@@ -12,6 +12,7 @@ export interface GroupResponse {
 }
 
 export interface Group {
+  name: string;
   id: string;
   code: string;
   semester: number;

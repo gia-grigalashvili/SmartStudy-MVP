@@ -1,424 +1,450 @@
-// import React, { useState, useEffect, useRef } from 'react';
-// import { Send, BookOpen, FileText, CheckCircle, XCircle, RotateCcw } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Send, Bot, User, Loader2, FileText, CheckCircle, XCircle, Trophy, BookOpen, Brain, Sparkles, ArrowLeft } from 'lucide-react';
 
-export default function AiAssistant() {
-//   const [messages, setMessages] = useState([]);
-//   const [input, setInput] = useState('');
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [currentView, setCurrentView] = useState('chat'); // chat, test, results
-//   const [testData, setTestData] = useState(null);
-//   const [studentAnswers, setStudentAnswers] = useState({});
-//   const [testResults, setTestResults] = useState(null);
-//   const [practiceExercises, setPracticeExercises] = useState(null);
-//   const messagesEndRef = useRef(null);
-//   const chatHistoryRef = useRef([]);
+// Types
+interface Message {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+  test?: TestData | null;
+  isResult?: boolean;
+  isCorrect?: boolean;
+}
 
-//   const API_KEY = process.env.REACT_APP_API_KEY || process.env.API_KEY;
+interface Question {
+  question: string;
+  options: string[];
+  correct: number;
+}
 
-//   const scrollToBottom = () => {
-//     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-//   };
+interface TestData {
+  subject: string;
+  grade: string;
+  difficulty: string;
+  topic: string;
+  questions: Question[];
+}
 
-//   useEffect(() => {
-//     scrollToBottom();
-//   }, [messages]);
+// Main App Component with Routing
+export default function AiAssistantApp() {
+  const [currentRoute, setCurrentRoute] = useState<'chat' | 'test'>('chat');
+  const [testData, setTestData] = useState<TestData | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
 
-//   const callGeminiAPI = async (prompt, systemInstruction) => {
-//     const response = await fetch(
-//       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
-//       {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({
-//           contents: [{ parts: [{ text: prompt }] }],
-//           systemInstruction: { parts: [{ text: systemInstruction }] },
-//           generationConfig: {
-//             temperature: 0.7,
-//             maxOutputTokens: 2048,
-//           }
-//         })
-//       }
-//     );
+  const navigateToTest = (test: TestData) => {
+    setTestData(test);
+    setCurrentRoute('test');
+  };
 
-//     if (!response.ok) {
-//       throw new Error('API call failed');
-//     }
+  const navigateToChat = () => {
+    setCurrentRoute('chat');
+    setTestData(null);
+  };
 
-//     const data = await response.json();
-//     return data.candidates[0].content.parts[0].text;
-//   };
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+      {currentRoute === 'chat' ? (
+        <ChatPage 
+          onNavigateToTest={navigateToTest}
+          messages={messages}
+          setMessages={setMessages}
+        />
+      ) : (
+        <TestPage 
+          testData={testData!}
+          onNavigateBack={navigateToChat}
+        />
+      )}
+    </div>
+  );
+}
 
-//   const handleSendMessage = async () => {
-//     if (!input.trim()) return;
+// Chat Page Component
+function ChatPage({ onNavigateToTest, messages, setMessages }: {
+  onNavigateToTest: (test: TestData) => void;
+  messages: Message[];
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+}) {
+  const [input, setInput] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-//     const userMessage = { role: 'user', content: input };
-//     setMessages(prev => [...prev, userMessage]);
-//     chatHistoryRef.current.push(userMessage);
-//     setInput('');
-//     setIsLoading(true);
+  useEffect(() => {
+    if (messages.length === 0) {
+      setMessages([{
+        role: 'assistant',
+        content: 'გამარჯობა! 👋 მე ვარ შენი AI მასწავლებელი და მზად ვარ დაგეხმარო ნებისმიერ სასწავლო თემაში! 📚\n\nშემიძლია:\n✨ ავხსნა რთული კონცეფციები\n📝 შევქმნა ტესტები\n🎯 დაგეხმარო საშინაო დავალებებში\n\nდამისვი კითხვა! 🚀'
+      }]);
+    }
+  }, []);
 
-//     try {
-//       const conversationContext = chatHistoryRef.current
-//         .map(msg => `${msg.role === 'user' ? 'Student' : 'Assistant'}: ${msg.content}`)
-//         .join('\n');
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
-//       const systemInstruction = `You are a helpful and patient teacher's assistant. Your role is to:
-// 1. Explain concepts clearly and in detail with examples
-// 2. Answer student questions thoroughly
-// 3. When a student asks to start a test, respond with: TEST_REQUEST:{topic1, topic2, ...}
-// 4. Be encouraging and supportive
-// 5. Break down complex topics into simpler parts
-// 6. Use analogies and real-world examples
+  const handleSend = async (): Promise<void> => {
+    if (!input.trim() || loading) return;
 
-// When you detect a test request, format it exactly as: TEST_REQUEST:{topic1, topic2}`;
+    const userMessage: Message = { role: 'user', content: input };
+    setMessages(prev => [...prev, userMessage]);
+    const currentInput = input;
+    setInput('');
+    setLoading(true);
 
-//       const prompt = `${conversationContext}\nAssistant:`;
-//       const response = await callGeminiAPI(prompt, systemInstruction);
-
-//       if (response.includes('TEST_REQUEST:')) {
-//         const topicsMatch = response.match(/TEST_REQUEST:\{([^}]+)\}/);
-//         if (topicsMatch) {
-//           const topics = topicsMatch[1].split(',').map(t => t.trim());
-//           await generateTest(topics);
-//           const aiMessage = {
-//             role: 'assistant',
-//             content: `Great! I'll prepare a test on ${topics.join(' and ')}. Redirecting you to the test now...`
-//           };
-//           setMessages(prev => [...prev, aiMessage]);
-//           chatHistoryRef.current.push(aiMessage);
-//         }
-//       } else {
-//         const aiMessage = { role: 'assistant', content: response };
-//         setMessages(prev => [...prev, aiMessage]);
-//         chatHistoryRef.current.push(aiMessage);
-//       }
-//     } catch (error) {
-//       setMessages(prev => [...prev, {
-//         role: 'assistant',
-//         content: 'Sorry, I encountered an error. Please try again.'
-//       }]);
-//     }
-
-//     setIsLoading(false);
-//   };
-
-//   const generateTest = async (topics) => {
-//     setIsLoading(true);
-//     try {
-//       const systemInstruction = `Generate a test with exactly 5 multiple-choice questions on the given topics. 
-// Format your response as valid JSON with this exact structure:
-// {
-//   "title": "Test Title",
-//   "questions": [
-//     {
-//       "id": 1,
-//       "question": "Question text",
-//       "options": ["A) option1", "B) option2", "C) option3", "D) option4"],
-//       "correct": 0
-//     }
-//   ]
-// }
-// The "correct" field should be the index (0-3) of the correct answer.`;
-
-//       const prompt = `Create a test on: ${topics.join(', ')}`;
-//       const response = await callGeminiAPI(prompt, systemInstruction);
+    try {
+      // Simulate API call - Replace with actual API
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
-//       const jsonMatch = response.match(/\{[\s\S]*\}/);
-//       if (jsonMatch) {
-//         const testJson = JSON.parse(jsonMatch[0]);
-//         setTestData(testJson);
-//         setCurrentView('test');
-//         setStudentAnswers({});
-//       }
-//     } catch (error) {
-//       console.error('Error generating test:', error);
-//       setMessages(prev => [...prev, {
-//         role: 'assistant',
-//         content: 'Sorry, I had trouble generating the test. Please try again.'
-//       }]);
-//     }
-//     setIsLoading(false);
-//   };
+      // Check if user wants a test
+      const wantsTest = currentInput.toLowerCase().includes('ტესტ') || 
+                       currentInput.toLowerCase().includes('test');
+      
+      if (wantsTest) {
+        // Mock test data
+        const mockTest: TestData = {
+          subject: 'მათემატიკა',
+          grade: '10',
+          difficulty: 'საშუალო',
+          topic: currentInput.includes('მათემატიკა') ? 'მათემატიკა' : 'ზოგადი ცოდნა',
+          questions: [
+            {
+              question: 'რა არის 2 + 2?',
+              options: ['3', '4', '5', '6'],
+              correct: 1
+            },
+            {
+              question: 'რა არის 5 × 3?',
+              options: ['10', '12', '15', '20'],
+              correct: 2
+            },
+            {
+              question: 'რა არის 10 ÷ 2?',
+              options: ['3', '4', '5', '6'],
+              correct: 2
+            }
+          ]
+        };
 
-//   const handleAnswerSelect = (questionId, answerIndex) => {
-//     setStudentAnswers(prev => ({ ...prev, [questionId]: answerIndex }));
-//   };
+        setMessages(prev => [...prev, {
+          role: 'assistant',
+          content: `შესანიშნავია! შევქმენი ტესტი შენთვის თემაზე: "${mockTest.topic}"\n\n📚 საგანი: ${mockTest.subject}\n📊 დონე: ${mockTest.difficulty}\n📝 კითხვების რაოდენობა: ${mockTest.questions.length}\n\nდააჭირე ღილაკს ტესტის დასაწყებად! 🚀`,
+          test: mockTest
+        }]);
+      } else {
+        setMessages(prev => [...prev, {
+          role: 'assistant',
+          content: 'მშვენიერი კითხვაა! 🤔 რომ ტესტი გსურს, უბრალოდ მომწერე "შექმენი ტესტი" და დაგეხმარები! 📝'
+        }]);
+      }
+    } catch (error) {
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: '😔 ბოდიში, დაფიქსირდა შეცდომა. გთხოვ სცადო თავიდან.'
+      }]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-//   const submitTest = async () => {
-//     setIsLoading(true);
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  return (
+    <div className="min-h-screen p-4">
+      <div className="max-w-5xl mx-auto h-[95vh] flex flex-col">
+        
+        {/* Header */}
+        <div className="bg-white rounded-3xl shadow-xl mb-4 overflow-hidden">
+          <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-6">
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <div className="bg-white/20 p-4 rounded-2xl backdrop-blur-lg border border-white/30">
+                  <Brain className="w-8 h-8 text-white" />
+                </div>
+                <div className="absolute -top-1 -right-1 bg-yellow-400 rounded-full p-1">
+                  <Sparkles className="w-4 h-4 text-yellow-900" />
+                </div>
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold text-white">AI ასისტენტი</h1>
+                <p className="text-indigo-100 text-sm flex items-center gap-2">
+                  <BookOpen className="w-4 h-4" />
+                  შენი პირადი მასწავლებელი 24/7
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Messages */}
+        <div className="flex-1 bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col">
+          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            {messages.map((msg, idx) => (
+              <div key={idx}>
+                <div className={`flex gap-3 animate-[slideIn_0.3s_ease-out] ${
+                  msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'
+                }`}>
+                  <div className={`flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg ${
+                    msg.role === 'user'
+                      ? 'bg-gradient-to-br from-indigo-500 to-purple-600'
+                      : 'bg-gradient-to-br from-pink-500 to-rose-600'
+                  }`}>
+                    {msg.role === 'user' ? (
+                      <User className="w-6 h-6 text-white" />
+                    ) : (
+                      <Bot className="w-6 h-6 text-white" />
+                    )}
+                  </div>
+                  <div className={`max-w-[75%] rounded-2xl p-5 shadow-md ${
+                    msg.role === 'user'
+                      ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white'
+                      : 'bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 border border-gray-200'
+                  }`}>
+                    <p className="whitespace-pre-wrap leading-relaxed">{msg.content}</p>
+                    {msg.test && (
+                      <button
+                        onClick={() => onNavigateToTest(msg.test!)}
+                        className="mt-4 w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-6 rounded-xl hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 font-semibold flex items-center justify-center gap-2"
+                      >
+                        <FileText className="w-5 h-5" />
+                        დავიწყო ტესტი
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+            
+            {loading && (
+              <div className="flex gap-3 animate-[slideIn_0.3s_ease-out]">
+                <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-lg">
+                  <Bot className="w-6 h-6 text-white" />
+                </div>
+                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-5 border border-gray-200 shadow-md">
+                  <div className="flex items-center gap-2">
+                    <Loader2 className="w-5 h-5 text-purple-600 animate-spin" />
+                    <span className="text-gray-600 text-sm">ვფიქრობ...</span>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input */}
+          <div className="border-t border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100 p-6">
+            <div className="flex gap-3">
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="დასვი კითხვა ან სთხოვე ტესტი... 🎯"
+                className="flex-1 resize-none rounded-2xl border-2 border-gray-300 p-4 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200 transition-all bg-white shadow-sm"
+                rows={2}
+                disabled={loading}
+              />
+              <button
+                onClick={handleSend}
+                disabled={loading || !input.trim()}
+                className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white px-8 rounded-2xl hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:transform-none"
+              >
+                <Send className="w-6 h-6" />
+              </button>
+            </div>
+            <p className="text-xs text-gray-500 mt-3 text-center">
+              💡 მაგალითად: "ახსენი პითაგორას თეორემა" ან "შექმენი ტესტი მათემატიკაში"
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Test Page Component
+function TestPage({ testData, onNavigateBack }: {
+  testData: TestData;
+  onNavigateBack: () => void;
+}) {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [answers, setAnswers] = useState<number[]>([]);
+  const [showResult, setShowResult] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  const handleAnswer = (selectedAnswer: number) => {
+    const question = testData.questions[currentQuestion];
+    const isCorrect = selectedAnswer === question.correct;
     
-//     const results = testData.questions.map(q => ({
-//       question: q.question,
-//       studentAnswer: q.options[studentAnswers[q.id]],
-//       correctAnswer: q.options[q.correct],
-//       isCorrect: studentAnswers[q.id] === q.correct
-//     }));
+    if (isCorrect) {
+      setScore(score + 1);
+    }
 
-//     const score = results.filter(r => r.isCorrect).length;
-//     const totalQuestions = results.length;
-//     const percentage = Math.round((score / totalQuestions) * 100);
+    setAnswers([...answers, selectedAnswer]);
+    setShowResult(true);
 
-//     const testResultsData = {
-//       score,
-//       totalQuestions,
-//       percentage,
-//       results
-//     };
+    setTimeout(() => {
+      if (currentQuestion + 1 < testData.questions.length) {
+        setCurrentQuestion(currentQuestion + 1);
+        setShowResult(false);
+      } else {
+        setIsCompleted(true);
+      }
+    }, 1500);
+  };
 
-//     setTestResults(testResultsData);
+  const percentage = isCompleted ? Math.round((score / testData.questions.length) * 100) : 0;
 
-//     try {
-//       const incorrectTopics = results
-//         .filter(r => !r.isCorrect)
-//         .map(r => r.question)
-//         .join('; ');
+  return (
+    <div className="min-h-screen p-4">
+      <div className="max-w-4xl mx-auto py-8">
+        
+        {/* Header */}
+        <div className="bg-white rounded-3xl shadow-xl mb-6 overflow-hidden">
+          <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-6">
+            <div className="flex items-center justify-between">
+              <button
+                onClick={onNavigateBack}
+                className="bg-white/20 hover:bg-white/30 p-3 rounded-xl backdrop-blur-lg border border-white/30 transition-all"
+              >
+                <ArrowLeft className="w-6 h-6 text-white" />
+              </button>
+              <div className="text-center flex-1">
+                <h1 className="text-2xl font-bold text-white">{testData.topic}</h1>
+                <div className="flex gap-2 justify-center mt-2 text-sm">
+                  <span className="bg-white/20 px-3 py-1 rounded-full text-white">
+                    {testData.subject}
+                  </span>
+                  <span className="bg-white/20 px-3 py-1 rounded-full text-white">
+                    {testData.grade} კლასი
+                  </span>
+                </div>
+              </div>
+              <div className="bg-white/20 px-6 py-3 rounded-2xl backdrop-blur-lg border border-white/30">
+                <p className="text-sm font-bold text-white flex items-center gap-2">
+                  <Trophy className="w-4 h-4" />
+                  {score}/{testData.questions.length}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-//       const systemInstruction = `Based on the student's test performance, generate 3 practice exercises to help them improve.
-// Focus on areas where they made mistakes. Format as JSON:
-// {
-//   "exercises": [
-//     {
-//       "title": "Exercise title",
-//       "description": "What to do",
-//       "task": "Specific task or problem"
-//     }
-//   ]
-// }`;
+        {/* Content */}
+        {!isCompleted ? (
+          <div className="bg-white rounded-3xl shadow-xl p-8">
+            {/* Progress */}
+            <div className="mb-6">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm font-semibold text-gray-600">
+                  კითხვა {currentQuestion + 1} / {testData.questions.length}
+                </span>
+                <span className="text-sm text-purple-600">
+                  {Math.round(((currentQuestion + 1) / testData.questions.length) * 100)}%
+                </span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-3">
+                <div
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 h-3 rounded-full transition-all duration-500"
+                  style={{ width: `${((currentQuestion + 1) / testData.questions.length) * 100}%` }}
+                />
+              </div>
+            </div>
 
-//       const prompt = `Student scored ${percentage}% on the test. They got these questions wrong: ${incorrectTopics || 'None - they got everything right!'}
-// Generate appropriate practice exercises.`;
-      
-//       const response = await callGeminiAPI(prompt, systemInstruction);
-//       const jsonMatch = response.match(/\{[\s\S]*\}/);
-      
-//       if (jsonMatch) {
-//         const exercisesJson = JSON.parse(jsonMatch[0]);
-//         setPracticeExercises(exercisesJson);
-//       }
-//     } catch (error) {
-//       console.error('Error generating exercises:', error);
-//     }
+            {/* Question */}
+            <div className="mb-8">
+              <div className="flex items-start gap-3 mb-6">
+                <div className="bg-gradient-to-br from-purple-500 to-pink-600 p-3 rounded-xl">
+                  <FileText className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 flex-1">
+                  {testData.questions[currentQuestion].question}
+                </h3>
+              </div>
 
-//     setCurrentView('results');
-//     setIsLoading(false);
-//   };
+              {/* Options */}
+              <div className="space-y-3">
+                {testData.questions[currentQuestion].options.map((option, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => !showResult && handleAnswer(idx)}
+                    disabled={showResult}
+                    className={`w-full text-left p-5 rounded-2xl border-2 transition-all duration-200 font-medium shadow-sm transform ${
+                      showResult
+                        ? idx === testData.questions[currentQuestion].correct
+                          ? 'bg-green-100 border-green-400 text-green-900'
+                          : idx === answers[currentQuestion]
+                          ? 'bg-red-100 border-red-400 text-red-900'
+                          : 'bg-gray-100 border-gray-300 text-gray-500'
+                        : 'bg-white hover:bg-gradient-to-r hover:from-purple-100 hover:to-pink-100 border-purple-200 hover:border-purple-400 text-gray-700 hover:text-purple-900 hover:shadow-md hover:-translate-y-0.5'
+                    } ${showResult ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                  >
+                    <span className="flex items-center gap-3">
+                      <span className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm ${
+                        showResult && idx === testData.questions[currentQuestion].correct
+                          ? 'bg-green-500 text-white'
+                          : showResult && idx === answers[currentQuestion]
+                          ? 'bg-red-500 text-white'
+                          : 'bg-gradient-to-br from-purple-500 to-pink-600 text-white'
+                      }`}>
+                        {String.fromCharCode(65 + idx)}
+                      </span>
+                      <span className="flex-1">{option}</span>
+                      {showResult && idx === testData.questions[currentQuestion].correct && (
+                        <CheckCircle className="w-6 h-6 text-green-600" />
+                      )}
+                      {showResult && idx === answers[currentQuestion] && idx !== testData.questions[currentQuestion].correct && (
+                        <XCircle className="w-6 h-6 text-red-600" />
+                      )}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          // Final Results
+          <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
+            <div className="mb-6">
+              <div className="inline-block p-6 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full mb-4">
+                <Trophy className="w-16 h-16 text-purple-600" />
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                {percentage >= 80 ? '🏆 შესანიშნავია!' : percentage >= 60 ? '👏 კარგი შედეგი!' : '💪 კარგი მცდელობა!'}
+              </h2>
+              <p className="text-gray-600">ტესტი დასრულებულია!</p>
+            </div>
 
-//   const returnToChat = () => {
-//     setCurrentView('chat');
-//     setTestData(null);
-//     setStudentAnswers({});
-//     setTestResults(null);
-//     setPracticeExercises(null);
-//   };
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 mb-6">
+              <div className="text-6xl font-bold text-purple-600 mb-2">
+                {score}/{testData.questions.length}
+              </div>
+              <div className="text-2xl font-semibold text-gray-700">
+                {percentage}%
+              </div>
+            </div>
 
-//   if (currentView === 'test' && testData) {
-//     return (
-//       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-//         <div className="max-w-3xl mx-auto">
-//           <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
-//             <div className="flex items-center mb-6">
-//               <FileText className="w-8 h-8 text-indigo-600 mr-3" />
-//               <h2 className="text-3xl font-bold text-gray-800">{testData.title}</h2>
-//             </div>
-            
-//             {testData.questions.map((q, idx) => (
-//               <div key={q.id} className="mb-8 pb-6 border-b border-gray-200 last:border-0">
-//                 <p className="font-semibold text-lg text-gray-800 mb-4">
-//                   {idx + 1}. {q.question}
-//                 </p>
-//                 <div className="space-y-3">
-//                   {q.options.map((option, optIdx) => (
-//                     <label
-//                       key={optIdx}
-//                       className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition ${
-//                         studentAnswers[q.id] === optIdx
-//                           ? 'border-indigo-600 bg-indigo-50'
-//                           : 'border-gray-200 hover:border-indigo-300'
-//                       }`}
-//                     >
-//                       <input
-//                         type="radio"
-//                         name={`question-${q.id}`}
-//                         checked={studentAnswers[q.id] === optIdx}
-//                         onChange={() => handleAnswerSelect(q.id, optIdx)}
-//                         className="mr-3"
-//                       />
-//                       <span className="text-gray-700">{option}</span>
-//                     </label>
-//                   ))}
-//                 </div>
-//               </div>
-//             ))}
+            <p className="text-gray-600 mb-8">
+              {percentage >= 80 
+                ? 'შენ ბრწყინვალედ ფლობ ამ თემას! 🌟'
+                : percentage >= 60
+                ? 'კარგად გაართვი თავი! კიდევ ცოტა ვარჯიში და იდეალური იქნები! 📚'
+                : 'არ დანებდე! კიდევ ერთხელ გადაიკითხე მასალა და სცადე ხელახლა! 💪'
+              }
+            </p>
 
-//             <button
-//               onClick={submitTest}
-//               disabled={Object.keys(studentAnswers).length !== testData.questions.length || isLoading}
-//               className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition mt-6"
-//             >
-//               {isLoading ? 'Submitting...' : 'Submit Test'}
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   if (currentView === 'results' && testResults) {
-//     return (
-//       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-//         <div className="max-w-3xl mx-auto">
-//           <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
-//             <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Test Results</h2>
-            
-//             <div className="text-center mb-8">
-//               <div className="inline-block">
-//                 <div className={`text-6xl font-bold mb-2 ${
-//                   testResults.percentage >= 80 ? 'text-green-600' :
-//                   testResults.percentage >= 60 ? 'text-yellow-600' : 'text-red-600'
-//                 }`}>
-//                   {testResults.percentage}%
-//                 </div>
-//                 <p className="text-gray-600">
-//                   {testResults.score} out of {testResults.totalQuestions} correct
-//                 </p>
-//               </div>
-//             </div>
-
-//             <div className="space-y-4 mb-8">
-//               {testResults.results.map((r, idx) => (
-//                 <div key={idx} className="border-l-4 p-4 rounded-r-lg" style={{
-//                   borderColor: r.isCorrect ? '#10b981' : '#ef4444',
-//                   backgroundColor: r.isCorrect ? '#f0fdf4' : '#fef2f2'
-//                 }}>
-//                   <div className="flex items-start">
-//                     {r.isCorrect ? (
-//                       <CheckCircle className="w-6 h-6 text-green-600 mr-3 flex-shrink-0 mt-1" />
-//                     ) : (
-//                       <XCircle className="w-6 h-6 text-red-600 mr-3 flex-shrink-0 mt-1" />
-//                     )}
-//                     <div className="flex-1">
-//                       <p className="font-semibold text-gray-800 mb-2">{r.question}</p>
-//                       <p className="text-sm text-gray-600">
-//                         <span className="font-medium">Your answer:</span> {r.studentAnswer}
-//                       </p>
-//                       {!r.isCorrect && (
-//                         <p className="text-sm text-gray-600">
-//                           <span className="font-medium">Correct answer:</span> {r.correctAnswer}
-//                         </p>
-//                       )}
-//                     </div>
-//                   </div>
-//                 </div>
-//               ))}
-//             </div>
-
-//             {practiceExercises && (
-//               <div className="bg-indigo-50 rounded-xl p-6 mb-6">
-//                 <h3 className="text-xl font-bold text-gray-800 mb-4">Practice Exercises</h3>
-//                 <div className="space-y-4">
-//                   {practiceExercises.exercises.map((ex, idx) => (
-//                     <div key={idx} className="bg-white rounded-lg p-4">
-//                       <h4 className="font-semibold text-indigo-600 mb-2">{ex.title}</h4>
-//                       <p className="text-sm text-gray-600 mb-2">{ex.description}</p>
-//                       <p className="text-gray-800">{ex.task}</p>
-//                     </div>
-//                   ))}
-//                 </div>
-//               </div>
-//             )}
-
-//             <button
-//               onClick={returnToChat}
-//               className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition flex items-center justify-center"
-//             >
-//               <RotateCcw className="w-5 h-5 mr-2" />
-//               Return to Chat
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
-//       <div className="bg-white shadow-md p-4 flex items-center">
-//         <BookOpen className="w-8 h-8 text-indigo-600 mr-3" />
-//         <h1 className="text-2xl font-bold text-gray-800">AI Teacher Assistant</h1>
-//       </div>
-
-//       <div className="flex-1 overflow-y-auto p-4 max-w-4xl w-full mx-auto">
-//         {messages.length === 0 && (
-//           <div className="text-center py-12">
-//             <BookOpen className="w-16 h-16 text-indigo-400 mx-auto mb-4" />
-//             <h2 className="text-2xl font-semibold text-gray-700 mb-2">
-//               Welcome to your AI Teacher Assistant!
-//             </h2>
-//             <p className="text-gray-600 mb-4">
-//               Ask me anything or request a test on any topic
-//             </p>
-//             <div className="text-left max-w-md mx-auto bg-white rounded-lg p-4 shadow-md">
-//               <p className="text-sm text-gray-700 mb-2 font-semibold">Try asking:</p>
-//               <ul className="text-sm text-gray-600 space-y-1">
-//                 <li>• "Explain photosynthesis in detail"</li>
-//                 <li>• "What is the Pythagorean theorem?"</li>
-//                 <li>• "Start a test on algebra and geometry"</li>
-//               </ul>
-//             </div>
-//           </div>
-//         )}
-
-//         {messages.map((msg, idx) => (
-//           <div
-//             key={idx}
-//             className={`flex mb-4 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-//           >
-//             <div
-//               className={`max-w-3xl px-6 py-4 rounded-2xl shadow-md ${
-//                 msg.role === 'user'
-//                   ? 'bg-indigo-600 text-white'
-//                   : 'bg-white text-gray-800 border border-gray-200'
-//               }`}
-//             >
-//               <p className="whitespace-pre-wrap">{msg.content}</p>
-//             </div>
-//           </div>
-//         ))}
-
-//         {isLoading && (
-//           <div className="flex justify-start mb-4">
-//             <div className="bg-white px-6 py-4 rounded-2xl shadow-md border border-gray-200">
-//               <div className="flex space-x-2">
-//                 <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"></div>
-//                 <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-//                 <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-//               </div>
-//             </div>
-//           </div>
-//         )}
-//         <div ref={messagesEndRef} />
-//       </div>
-
-//       <div className="bg-white border-t border-gray-200 p-4">
-//         <div className="max-w-4xl mx-auto flex gap-2">
-//           <input
-//             type="text"
-//             value={input}
-//             onChange={(e) => setInput(e.target.value)}
-//             onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSendMessage()}
-//             placeholder="Ask a question or request a test..."
-//             disabled={isLoading}
-//             className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none disabled:bg-gray-100"
-//           />
-//           <button
-//             onClick={handleSendMessage}
-//             disabled={!input.trim() || isLoading}
-//             className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition flex items-center"
-//           >
-//             <Send className="w-5 h-5" />
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
+            <button
+              onClick={onNavigateBack}
+              className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white py-4 px-8 rounded-2xl hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 font-semibold"
+            >
+              დაბრუნება ჩატში
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
