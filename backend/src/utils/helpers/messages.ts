@@ -106,6 +106,7 @@ export const errorMessages = {
     en: "User deleted successfully",
     ka: "მომხმარებელი წარმატებით წაიშალა",
   },
+
   // Validation errors
   invalidEmail: {
     en: "Invalid email",

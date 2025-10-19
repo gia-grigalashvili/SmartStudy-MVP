@@ -15,8 +15,6 @@ model Student {
   smsCode          String?
   smsCodeExpiresAt DateTime?
 
-  isVerified Boolean @default(false)
-
   refreshTokens    RefreshToken[]
   groupEnrollments GroupEnrollment[]
   tasks            Task[]
