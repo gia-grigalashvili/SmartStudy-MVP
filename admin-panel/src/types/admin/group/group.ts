@@ -71,6 +71,15 @@ export interface QuizResult {
   updatedAt: string;
 }
 
+export interface AcademicCalendarsResponse {
+  data: AcademicCalendar[];
+  count: number;
+}
+
+export interface AcademicCalendarResponse {
+  data: AcademicCalendar;
+}
+
 export interface AcademicCalendar {
   id: string;
   year: string;
