@@ -63,12 +63,7 @@ export const fetchGroups = async (
               },
             },
           },
-          academicCalendar: {
-            include: {
-              AcademicYear: true,
-            },
-          },
-          academicYear: true,
+          academicCalendar: true,
         },
       }),
       prisma.group.count({ where }),
@@ -125,12 +120,7 @@ export const fetchGroup = async (
             },
           },
         },
-        academicCalendar: {
-          include: {
-            AcademicYear: true,
-          },
-        },
-        academicYear: true,
+        academicCalendar: true,
       },
     });
 
@@ -175,14 +165,8 @@ export const createGroup = async (
   next: NextFunction
 ) => {
   try {
-    const {
-      academicYearId,
-      code,
-      semester,
-      subjects,
-      teacherId,
-      academicCalendarId,
-    } = req.body as CreateGroupDTO;
+    const { code, semester, year, subjects, teacherId, academicCalendarId } =
+      req.body as CreateGroupDTO;
 
     const sameGroup = await prisma.group.count({
       where: {
@@ -196,12 +180,10 @@ export const createGroup = async (
     const group = await prisma.group.create({
       data: {
         code,
+        year,
         semester,
         subjects: {
           connect: subjects.map((subjectId) => ({ id: subjectId })),
-        },
-        academicYear: {
-          connect: { id: academicYearId },
         },
         teacher: {
           connect: { id: teacherId },
@@ -228,14 +210,8 @@ export const updateGroup = async (
   try {
     const { id } = req.params;
 
-    const {
-      academicYearId,
-      code,
-      semester,
-      subjects,
-      teacherId,
-      academicCalendarId,
-    } = req.body as UpdateGroupDTO;
+    const { code, semester, subjects, year, teacherId, academicCalendarId } =
+      req.body as UpdateGroupDTO;
 
     const sameGroup = await prisma.group.count({
       where: {
@@ -269,10 +245,8 @@ export const updateGroup = async (
             connect: { id: academicCalendarId },
           },
         }),
-        academicYear: {
-          connect: { id: academicYearId },
-        },
         code,
+        year,
         semester,
         subjects: {
           set: subjects.map((subjectId) => ({ id: subjectId })),

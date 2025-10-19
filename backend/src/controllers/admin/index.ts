@@ -3,3 +3,4 @@ export * from "./teacher";
 export * from "./student";
 export * from "./group";
 export * from "./subject";
+export * from "./academic-calendar";
