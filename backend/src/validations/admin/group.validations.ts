@@ -11,15 +11,12 @@ export const deleteGroupValidation = [uuidValidation()];
 
 export const createGroupValidation = [
   body("code").isString().withMessage("invalidCode"),
+  body("year").isString().withMessage("invalidYear"),
   existanceValidation("group", "code"),
   body("semester").isInt().withMessage("invalidSemester"),
-  body("academicYearId").isUUID().withMessage("invalidAcademicYearId"),
   relationArrayValidation("subjects", "subject", { min: 1 }),
   body("teacherId").isUUID().withMessage("invalidTeacherId"),
-  body("academicCalendarId")
-    .optional()
-    .isUUID()
-    .withMessage("invalidAcademicCalendarId"),
+  body("academicCalendarId").isUUID().withMessage("invalidAcademicCalendarId"),
 ];
 
 export const updateGroupValidation = [
