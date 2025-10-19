@@ -7,13 +7,13 @@ import router from "@/routes/ai/chat.route";
 const adminRouteList = [
   { path: "/auth", router: AdminRoutes.adminAuthRouter },
   {
-    path: "academic-calendar",
+    path: "/academic-calendar",
     router: AdminRoutes.adminAcademicCalendarRouter,
   },
-  { path: "group", router: AdminRoutes.adminGroupRouter },
-  { path: "student", router: AdminRoutes.adminStudentRouter },
-  { path: "subject", router: AdminRoutes.adminSubjectRouter },
-  { path: "teacher", router: AdminRoutes.adminTeacherRouter },
+  { path: "/group", router: AdminRoutes.adminGroupRouter },
+  { path: "/student", router: AdminRoutes.adminStudentRouter },
+  { path: "/subject", router: AdminRoutes.adminSubjectRouter },
+  { path: "/teacher", router: AdminRoutes.adminTeacherRouter },
 ];
 
 const studentRouteList = [

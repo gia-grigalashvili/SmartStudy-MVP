@@ -25,9 +25,10 @@ adminGroupRouter.get(
 );
 
 adminGroupRouter.get(
-  "/:id",
+  "/unique/:id",
   adminAuthenticate,
   fetchGroupValidation,
+  validationHandler,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       return groupController.fetchGroup(req, res, next);
@@ -73,6 +74,42 @@ adminGroupRouter.put(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       return groupController.updateGroup(req, res, next);
+    } catch {
+      res.status(500).json({ errors: [{ message: GLOBAL_ERROR_MESSAGE }] });
+    }
+  }
+);
+
+adminGroupRouter.get(
+  "/subjects",
+  adminAuthenticate,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      return groupController.fetchSubjectsList(req, res, next);
+    } catch {
+      res.status(500).json({ errors: [{ message: GLOBAL_ERROR_MESSAGE }] });
+    }
+  }
+);
+
+adminGroupRouter.get(
+  "/teachers",
+  adminAuthenticate,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      return groupController.fetchTeachersList(req, res, next);
+    } catch {
+      res.status(500).json({ errors: [{ message: GLOBAL_ERROR_MESSAGE }] });
+    }
+  }
+);
+
+adminGroupRouter.get(
+  "/academic-calendars",
+  adminAuthenticate,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      return groupController.fetchAcademicCalendarsList(req, res, next);
     } catch {
       res.status(500).json({ errors: [{ message: GLOBAL_ERROR_MESSAGE }] });
     }
