@@ -19,7 +19,7 @@ export const useGetGroup = (id: string) => {
   return useQuery<GroupResponse, Error>({
     queryKey: ["groups", id],
     queryFn: async (): Promise<GroupResponse> => {
-      const { data } = await instance.get<GroupResponse>(`/group/${id}`);
+      const { data } = await instance.get<GroupResponse>(`/group/unique/${id}`);
       return data;
     },
     enabled: !!id,

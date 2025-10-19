@@ -15,7 +15,7 @@ export interface Group {
   id: string;
   code: string;
   semester: number;
-  year: number;
+  year: string;
   subjects: GroupSubject[];
   enrollments: GroupEnrollment[];
   quizzes: Quiz[];

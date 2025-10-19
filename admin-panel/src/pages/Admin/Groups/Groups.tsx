@@ -104,7 +104,7 @@ const Groups = () => {
         <Button
           size="lg"
           className="premium-button floating-action flex items-center gap-2 shadow-md transition-all hover:shadow-lg"
-          onClick={() => navigate("/landing/groups/create")}
+          onClick={() => navigate("/administration/groups/create")}
         >
           <Plus className="h-5 w-5" />
           {toUpperCase(t("admin.groups.addGroup"))}
@@ -116,9 +116,9 @@ const Groups = () => {
         columns={columns}
         refetch={refetch}
         isLoading={isFetching}
-        deleteEndpoint="group"
+        deleteEndpoint="admin/group"
         total={data?.count}
-        editUrl="/landing/groups/edit"
+        editUrl="/administration/groups/edit"
         emptyMessage={toUpperCase(t("admin.groups.noGroupsFound"))}
         mobileCardRender={(item) => (
           <div>
