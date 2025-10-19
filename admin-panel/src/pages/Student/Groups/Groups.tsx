@@ -1,6 +1,4 @@
-const Groups = () => {
-  return <div>Groups</div>;
-};
+import Groups from "@/components/groups/Groups";
 
 export const StudentGroupsNavigationRoute = {
   element: <Groups />,
