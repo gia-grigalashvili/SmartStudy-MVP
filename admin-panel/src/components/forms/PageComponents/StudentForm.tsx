@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import React from "react";
 import axios from "@/api/axios";
 import { useTranslation } from "react-i18next";
@@ -36,7 +37,10 @@ export const StudentForm: React.FC<StudentFormProps> = ({
 
   const mapFetchedToForm = (entity: Student): Partial<StudentFormValues> => {
     if (!entity) return {};
-    const { dateOfBirth, email, personalId } = entity;
+    let { dateOfBirth, email, personalId } = entity;
+    if (dateOfBirth && dateOfBirth.length > 10) {
+      dateOfBirth = dateOfBirth.slice(0, 10);
+    }
     const translations = entity.translations ?? [];
     const en = translations.find((tr) => tr.language?.code === "en");
     const ka = translations.find((tr) => tr.language?.code === "ka");
@@ -65,12 +69,26 @@ export const StudentForm: React.FC<StudentFormProps> = ({
     return res.data?.data ?? res.data;
   };
 
+  // Before sending, ensure dateOfBirth is ISO string (yyyy-MM-ddTHH:mm:ss.sssZ)
   const createEntity = async (payload: StudentFormValues) => {
-    await axios.post("admin/student", payload);
+    const sendPayload = {
+      ...payload,
+      dateOfBirth: payload.dateOfBirth
+        ? new Date(payload.dateOfBirth).toISOString()
+        : null
+    };
+    await axios.post("admin/student", sendPayload);
   };
 
+  // Before sending, ensure dateOfBirth is ISO string (yyyy-MM-ddTHH:mm:ss.sssZ)
   const updateEntity = async (entityId: string, payload: StudentFormValues) => {
-    await axios.put(`admin/student/${entityId}`, payload);
+    const sendPayload = {
+      ...payload,
+      dateOfBirth: payload.dateOfBirth
+        ? new Date(payload.dateOfBirth).toISOString()
+        : null
+    };
+    await axios.put(`admin/student/${entityId}`, sendPayload);
   };
 
   const deleteEntity = async (entityId: string) => {
@@ -89,6 +107,17 @@ export const StudentForm: React.FC<StudentFormProps> = ({
           type: "email" as const,
           props: { required: true }
         },
+        ...(mode === "create"
+          ? [
+              {
+                kind: "simple" as const,
+                name: "password",
+                label: toUpperCase(t("admin.students.password")),
+                type: "text" as const,
+                props: { required: true }
+              }
+            ]
+          : []),
         {
           kind: "simple" as const,
           name: "personalId",
@@ -100,7 +129,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
           kind: "simple" as const,
           name: "dateOfBirth",
           label: toUpperCase(t("admin.students.dateOfBirth")),
-          type: "text" as const,
+          type: "datePicker" as const,
           props: { required: true }
         }
       ]
@@ -112,7 +141,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
       resourceName="students"
       mode={mode}
       id={id ?? undefined}
-      schema={studentSchema(t)}
+      schema={studentSchema(t, mode === "edit")}
       defaultValues={defaultValues}
       fetchEntity={fetchEntity}
       createEntity={createEntity}
@@ -144,6 +173,7 @@ export const StudentForm: React.FC<StudentFormProps> = ({
       onSuccessNavigate={onSuccessNavigate}
       mapFetchedToForm={mapFetchedToForm}
       renderFooter={() => null}
+      key={mode + String(id)}
     />
   );
 };
