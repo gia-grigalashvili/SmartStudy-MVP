@@ -12,6 +12,7 @@ export interface GroupResponse {
 }
 
 export interface Group {
+  students: any;
   name: string;
   id: string;
   code: string;
