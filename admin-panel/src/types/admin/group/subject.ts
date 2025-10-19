@@ -1,4 +1,4 @@
-import { Language } from "../global";
+import { Language } from "../../global";
 import { GroupSubject, Quiz } from "./group";
 
 export interface SubjectsResponse {

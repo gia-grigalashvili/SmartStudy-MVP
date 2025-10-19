@@ -31,6 +31,52 @@ export const en = {
         dashboard: "Dashboard",
         teachers: "Teachers",
         students: "Students"
+      },
+      groups: {
+        errors: {
+          codeRequired: "Code is required",
+          yearRequired: "Year is required",
+          semesterRequired: "Semester is required",
+          subjectRequired: "At least one subject is required",
+          teacherRequired: "Teacher is required",
+          academicCalendarRequired: "Academic calendar is required"
+        }
+      },
+      academicCalendar: {
+        errors: {
+          yearRequired: "Year is required",
+          semesterRequired: "Semester is required",
+          startDateRequired: "Start date is required",
+          endDateRequired: "End date is required"
+        }
+      },
+      students: {
+        errors: {
+          emailInvalid: "Invalid email",
+          dateOfBirthRequired: "Date of birth is required",
+          personalIdLength: "Personal ID must be between 9 and 20 characters",
+          classInvalid: "Class must be an integer",
+          passwordRequired: "Password is required",
+          firstNameRequired: "First name is required",
+          lastNameRequired: "Last name is required"
+        }
+      },
+      teachers: {
+        errors: {
+          emailInvalid: "Invalid email",
+          dateOfBirthRequired: "Date of birth is required",
+          personalIdLength: "Personal ID must be between 9 and 20 characters",
+          passwordRequired: "Password is required",
+          firstNameRequired: "First name is required",
+          lastNameRequired: "Last name is required"
+        }
+      },
+      subjects: {
+        errors: {
+          codeRequired: "Code is required",
+          firstNameRequired: "First name is required",
+          lastNameRequired: "Last name is required"
+        }
       }
     },
 
@@ -64,7 +110,7 @@ export const en = {
         failed: "Operation failed",
         successful: "Operation successful"
       },
-      "data": {
+      data: {
         synced: "Data Synchronized"
       },
       error: "Error",

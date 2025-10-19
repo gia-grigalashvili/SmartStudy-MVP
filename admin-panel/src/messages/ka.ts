@@ -31,6 +31,52 @@ export const ka = {
         dashboard: "დაშბორდი",
         teachers: "მასწავლებლები",
         students: "სტუდენტები"
+      },
+      groups: {
+        errors: {
+          codeRequired: "კოდი აუცილებელია",
+          yearRequired: "წელი აუცილებელია",
+          semesterRequired: "სემესტრი აუცილებელია",
+          subjectRequired: "საგანი აუცილებელია",
+          teacherRequired: "მასწავლებელი აუცილებელია",
+          academicCalendarRequired: "აკადემიური კალენდარი აუცილებელია"
+        }
+      },
+      academicCalendar: {
+        errors: {
+          yearRequired: "წელი აუცილებელია",
+          semesterRequired: "სემესტრი აუცილებელია",
+          startDateRequired: "დაწყების თარიღი აუცილებელია",
+          endDateRequired: "დასრულების თარიღი აუცილებელია"
+        }
+      },
+      students: {
+        errors: {
+          emailInvalid: "ელ-ფოსტა არასწორია",
+          dateOfBirthRequired: "დაბადების თარიღი აუცილებელია",
+          personalIdLength: "პირადი ნომერი უნდა იყოს 9-დან 20 სიმბოლომდე",
+          classInvalid: "კლასი უნდა იყოს მთელი რიცხვი",
+          passwordRequired: "პაროლი აუცილებელია",
+          firstNameRequired: "სახელი აუცილებელია",
+          lastNameRequired: "გვარი აუცილებელია"
+        }
+      },
+      teachers: {
+        errors: {
+          emailInvalid: "ელ-ფოსტა არასწორია",
+          dateOfBirthRequired: "დაბადების თარიღი აუცილებელია",
+          personalIdLength: "პირადი ნომერი უნდა იყოს 9-დან 20 სიმბოლომდე",
+          passwordRequired: "პაროლი აუცილებელია",
+          firstNameRequired: "სახელი აუცილებელია",
+          lastNameRequired: "გვარი აუცილებელია"
+        }
+      },
+      subjects: {
+        errors: {
+          codeRequired: "კოდი აუცილებელია",
+          firstNameRequired: "სახელი აუცილებელია",
+          lastNameRequired: "გვარი აუცილებელია"
+        }
       }
     },
 
@@ -81,7 +127,8 @@ export const ka = {
     },
 
     ui: {
-      languageErrorTooltip: "{{count}} {{error}} ენაზე {{language}} {{context}}",
+      languageErrorTooltip:
+        "{{count}} {{error}} ენაზე {{language}} {{context}}",
       error: "შეცდომა",
       errors: "შეცდომები",
       metadata: "მეტამონაცემი",
