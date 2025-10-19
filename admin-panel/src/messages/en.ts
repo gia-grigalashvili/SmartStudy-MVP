@@ -205,6 +205,11 @@ export const en = {
     },
 
     // 🏆 Hero section
+    header: {
+      logo: "SmartStudy",
+      ctaButton: "Join Us"
+    },
+
     hero: {
       badge: "AI-powered platform",
       imageAlt: "Hero image",

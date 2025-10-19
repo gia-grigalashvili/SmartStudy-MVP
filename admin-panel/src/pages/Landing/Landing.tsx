@@ -31,7 +31,10 @@ export default function Landing() {
               {i18n.language.toUpperCase()}
             </button>
 
-            <button className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:shadow-xl hover:shadow-blue-600/30">
+            <button
+              className="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:shadow-xl hover:shadow-blue-600/30"
+              onClick={() => (window.location.href = "/cms")}
+            >
               {t("header.ctaButton")}
             </button>
           </div>

@@ -187,6 +187,11 @@ export const ka = {
       goHome: "მთავარ გვერდზე დაბრუნება"
     },
 
+    header: {
+      logo: "SmartStudy",
+      ctaButton: "შემოგვიერთდით"
+    },
+
     hero: {
       badge: "AI-ის მხარდაჭერით",
       title: "ჭკვიანი სწავლება AI-ის დახმარებით",
