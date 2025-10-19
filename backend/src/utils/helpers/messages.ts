@@ -4,6 +4,10 @@ export const errorMessages = {
     en: "User not found",
     ka: "მომხმარებელი ვერ მოიძებნა",
   },
+  groupNotFound: {
+    en: "Group not found",
+    ka: "ჯგუფი ვერ მოიძებნა",
+  },
   invalidCredentials: {
     en: "Invalid email or password",
     ka: "არასწორი ელ-ფოსტა ან პაროლი",
@@ -72,6 +76,10 @@ export const errorMessages = {
     en: "User already exists",
     ka: "მომხმარებელი უკვე არსებობს",
   },
+  groupAlreadyExists: {
+    en: "Group already exists",
+    ka: "ჯგუფი უკვე არსებობს",
+  },
 
   // Messages
   verificationSuccessful: {
@@ -105,6 +113,10 @@ export const errorMessages = {
   userDeleted: {
     en: "User deleted successfully",
     ka: "მომხმარებელი წარმატებით წაიშალა",
+  },
+  groupDeleted: {
+    en: "Group deleted successfully",
+    ka: "ჯგუფი წარმატებით წაიშალა",
   },
 
   // Validation errors

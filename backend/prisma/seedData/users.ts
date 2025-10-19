@@ -39,7 +39,6 @@ const students: Prisma.StudentCreateInput[] = [
     dateOfBirth: new Date("2005-05-15"),
     class: 10,
     personalId: "STU123456",
-    isVerified: true,
     age: 18,
     translations: {
       create: [
