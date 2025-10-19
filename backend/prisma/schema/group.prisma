@@ -1,0 +1,82 @@
+model Group {
+  id String @id @default(uuid()) @db.Uuid
+
+  code     String         @unique
+  semester Int
+  year     String
+  subjects GroupSubject[]
+
+  enrollments GroupEnrollment[]
+  quizzes     Quiz[]
+
+  teacher            Teacher           @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacherId          String            @db.Uuid
+  academicCalendar   AcademicCalendar? @relation(fields: [academicCalendarId], references: [id])
+  academicCalendarId String?           @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("groups")
+}
+
+model GroupSubject {
+  id String @id @default(uuid()) @db.Uuid
+
+  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  subjectId String  @db.Uuid
+
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId String @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("group_subjects")
+}
+
+model Subject {
+  id String @id @default(uuid()) @db.Uuid
+
+  code          String               @unique
+  translations  SubjectTranslation[]
+  groupSubjects GroupSubject[]
+  quizzes       Quiz[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("subjects")
+}
+
+model GroupEnrollment {
+  id String @id @default(uuid()) @db.Uuid
+
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId String @db.Uuid
+
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId String  @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([groupId])
+  @@index([studentId])
+  @@map("group_enrollments")
+}
+
+model AcademicCalendar {
+  id        String   @id @default(uuid()) @db.Uuid
+  year      String
+  semester  Int
+  startDate DateTime
+  endDate   DateTime
+
+  groups Group[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("academic_calendars")
+}

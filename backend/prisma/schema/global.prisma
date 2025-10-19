@@ -1,15 +1,17 @@
 model Language {
-  id String @id @default(uuid(7)) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
   code  String @unique
   name  String
   order Int    @default(autoincrement())
 
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  AdminTranslation   AdminTranslation[]
-  TeacherTranslation TeacherTranslation[]
-  StudentTranslation StudentTranslation[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  adminTranslations   AdminTranslation[]
+  teacherTranslations TeacherTranslation[]
+  studentTranslations StudentTranslation[]
+  subjectTranslations SubjectTranslation[]
 
   @@map("languages")
 }
@@ -29,7 +31,7 @@ model File {
 }
 
 model RefreshToken {
-  id String @id @default(uuid(7)) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
   admin   Admin?  @relation(fields: [adminId], references: [id], onDelete: Cascade)
   adminId String? @db.Uuid
@@ -47,4 +49,66 @@ model RefreshToken {
   updatedAt DateTime @updatedAt
 
   @@map("refresh_tokens")
+}
+
+model Flashcard {
+  id        String  @id @default(uuid()) @db.Uuid
+  front     String
+  back      String
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId String  @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("flashcards")
+}
+
+model Task {
+  id          String   @id @default(uuid()) @db.Uuid
+  title       String
+  description String
+  dueDate     DateTime
+  completed   Boolean  @default(false)
+
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId String  @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tasks")
+}
+
+model Quiz {
+  id      String   @id @default(uuid()) @db.Uuid
+  title   String
+  date    DateTime
+  group   Group    @relation(fields: [groupId], references: [id])
+  groupId String   @db.Uuid
+
+  subject   Subject? @relation(fields: [subjectId], references: [id])
+  subjectId String?  @db.Uuid
+
+  results QuizResult[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("quizzes")
+}
+
+model QuizResult {
+  id     String @id @default(uuid()) @db.Uuid
+  score  Int
+  quiz   Quiz   @relation(fields: [quizId], references: [id])
+  quizId String @db.Uuid
+
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId String  @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("quiz_results")
 }
