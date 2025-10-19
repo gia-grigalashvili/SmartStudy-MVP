@@ -192,7 +192,36 @@ export const ka = {
         errors: {
           yearRequired: "წელი აუცილებელია"
         }
-      }
+      },
+      management: "მართვა",
+      managementDescription: "მართეთ ყველა ელემენტი ამ განყოფილებაში.",
+      addGroup: "ჯგუფის დამატება",
+      addStudent: "სტუდენტის დამატება",
+      addTeacher: "მასწავლებლის დამატება",
+      addAcademicCalendar: "აკადემიური კალენდრის დამატება",
+      noGroupsFound: "ჯგუფები ვერ მოიძებნა.",
+      noStudentsFound: "სტუდენტები ვერ მოიძებნა.",
+      noTeachersFound: "მასწავლებლები ვერ მოიძებნა.",
+      noAcademicCalendarsFound: "აკადემიური კალენდრები ვერ მოიძებნა.",
+      code: "კოდი",
+      year: "წელი",
+      semester: "სემესტრი",
+      subjectsLabel: "საგნები",
+      teacherLabel: "მასწავლებელი",
+      academicCalendarLabel: "აკადემიური კალენდარი",
+      studentsLabel: "სტუდენტები",
+      quizzes: "ტესტები",
+      personalId: "პირადი ნომერი",
+      age: "ასაკი",
+      class: "კლასი",
+      groupsCount: "ჯგუფების რაოდენობა",
+      createdAt: "შექმნის თარიღი",
+      email: "ელ-ფოსტა",
+      password: "პაროლი",
+      startDate: "დაწყების თარიღი",
+      endDate: "დასრულების თარიღი",
+      name: "სახელი",
+      viewCalendar: "კალენდრის ნახვა"
     },
 
     // ✅ Confirm dialogs

@@ -192,7 +192,36 @@ export const en = {
         errors: {
           yearRequired: "Year Required"
         }
-      }
+      },
+      management: "Management",
+      managementDescription: "Manage all items in this section.",
+      addGroup: "Add Group",
+      addStudent: "Add Student",
+      addTeacher: "Add Teacher",
+      addAcademicCalendar: "Add Academic Calendar",
+      noGroupsFound: "No groups found.",
+      noStudentsFound: "No students found.",
+      noTeachersFound: "No teachers found.",
+      noAcademicCalendarsFound: "No academic calendars found.",
+      code: "Code",
+      year: "Year",
+      semester: "Semester",
+      subjectsLabel: "Subjects",
+      teacherLabel: "Teacher",
+      academicCalendarLabel: "Academic Calendar",
+      studentsLabel: "Students",
+      quizzes: "Quizzes",
+      personalId: "Personal ID",
+      age: "Age",
+      class: "Class",
+      groupsCount: "Groups Count",
+      createdAt: "Created At",
+      email: "Email",
+      password: "Password",
+      startDate: "Start Date",
+      endDate: "End Date",
+      name: "Name",
+      viewCalendar: "View Calendar"
     },
 
     // ✅ Confirm dialogs
