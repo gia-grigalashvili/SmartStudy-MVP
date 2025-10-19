@@ -195,6 +195,17 @@ export const renew = async (
     const user = await prisma.admin.findUnique({
       where: { id: req.user.id },
       omit: { passwordHash: true },
+      include: {
+        translations: {
+          include: {
+            language: {
+              select: {
+                code: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (!user) {

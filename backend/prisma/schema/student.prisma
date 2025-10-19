@@ -8,14 +8,19 @@ model Student {
   needPasswordChange Boolean  @default(false)
   passwordHash       String
 
-  translations StudentTranslation[]
+  translations     StudentTranslation[]
+  cards            Flashcard[]
+  studentStatistic StudentStatistic[]
 
   smsCode          String?
   smsCodeExpiresAt DateTime?
 
   isVerified Boolean @default(false)
 
-  refreshTokens RefreshToken[]
+  refreshTokens    RefreshToken[]
+  groupEnrollments GroupEnrollment[]
+  tasks            Task[]
+  quizResults      QuizResult[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

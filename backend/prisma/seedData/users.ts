@@ -72,7 +72,6 @@ const teachers: Prisma.TeacherCreateInput[] = [
       +getEnvVariable("SALT_ROUNDS")
     ),
     personalId: "STU123456",
-    isVerified: true,
     age: 18,
     dateOfBirth: new Date("2005-05-15"),
     translations: {
