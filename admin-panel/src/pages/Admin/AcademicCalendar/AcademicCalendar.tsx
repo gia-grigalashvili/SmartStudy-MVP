@@ -37,13 +37,13 @@ const AcademicCalendars = () => {
     {
       key: "startDate",
       label: toUpperCase(t("admin.academicCalendars.startDate")),
-      render: (item) => <>{dayjs(item.startDate)}</>,
+      render: (item) => dayjs(item.startDate).format("YYYY-MM-DD"),
       sortable: true
     },
     {
       key: "endDate",
       label: toUpperCase(t("admin.academicCalendars.endDate")),
-      render: (item) => <>{dayjs(item.endDate)}</>,
+      render: (item) => dayjs(item.endDate).format("YYYY-MM-DD"),
       sortable: true
     }
   ];
@@ -66,7 +66,7 @@ const AcademicCalendars = () => {
         <Button
           size="lg"
           className="premium-button floating-action flex items-center gap-2 shadow-md transition-all hover:shadow-lg"
-          onClick={() => navigate("/administration/academicCalendars/create")}
+          onClick={() => navigate("/administration/academic-calendar/create")}
         >
           <Plus className="h-5 w-5" />
           {toUpperCase(t("admin.academicCalendars.addAcademicCalendar"))}
@@ -78,9 +78,9 @@ const AcademicCalendars = () => {
         columns={columns}
         refetch={refetch}
         isLoading={isFetching}
-        deleteEndpoint="admin/academicCalendar"
+        deleteEndpoint="admin/academic-calendar"
         total={data?.count}
-        editUrl="/administration/academicCalendars/edit"
+        editUrl="/administration/academic-calendar/edit"
         emptyMessage={toUpperCase(
           t("admin.academicCalendars.noAcademicCalendarsFound")
         )}
