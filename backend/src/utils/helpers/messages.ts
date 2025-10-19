@@ -4,6 +4,14 @@ export const errorMessages = {
     en: "User not found",
     ka: "მომხმარებელი ვერ მოიძებნა",
   },
+  groupNotFound: {
+    en: "Group not found",
+    ka: "ჯგუფი ვერ მოიძებნა",
+  },
+  academicCalendarNotFound: {
+    en: "Academic Calendar not found",
+    ka: "აკადემიური კალენდარი ვერ მოიძებნა",
+  },
   invalidCredentials: {
     en: "Invalid email or password",
     ka: "არასწორი ელ-ფოსტა ან პაროლი",
@@ -72,6 +80,10 @@ export const errorMessages = {
     en: "User already exists",
     ka: "მომხმარებელი უკვე არსებობს",
   },
+  groupAlreadyExists: {
+    en: "Group already exists",
+    ka: "ჯგუფი უკვე არსებობს",
+  },
 
   // Messages
   verificationSuccessful: {
@@ -106,6 +118,15 @@ export const errorMessages = {
     en: "User deleted successfully",
     ka: "მომხმარებელი წარმატებით წაიშალა",
   },
+  groupDeleted: {
+    en: "Group deleted successfully",
+    ka: "ჯგუფი წარმატებით წაიშალა",
+  },
+  academicCalendarDeleted: {
+    en: "Academic Calendar deleted successfully",
+    ka: "აკადემიური კალენდარი წარმატებით წაიშალა",
+  },
+
   // Validation errors
   invalidEmail: {
     en: "Invalid email",
@@ -114,6 +135,10 @@ export const errorMessages = {
   emailAlreadyExists: {
     en: "User with this email already exists",
     ka: "მომხმარებელი ამ ელ-ფოსტით უკვე არსებობს",
+  },
+  academicCalendarAlreadyExists: {
+    en: "Academic Calendar already exists",
+    ka: "აკადემიური კალენდარი უკვე არსებობს",
   },
   invalidFirstName: {
     en: "Invalid first name",
