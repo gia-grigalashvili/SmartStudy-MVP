@@ -8,8 +8,13 @@ const adminRouteList = [{ path: "/auth", router: AdminRoutes.adminAuthRouter }];
 const studentRouteList = [
   { path: "/auth", router: StudentRoutes.studentAuthRouter },
   { path: "/upload", router: StudentRoutes.uploadRouter },
+<<<<<<< HEAD
   { path: "/dashboard", router: StudentRoutes.studentDashboardRouter },
   { path: "/groups", router: StudentRoutes.studentgroupsRouter },
+=======
+  { path: "/group", router: StudentRoutes.studentGroupRouter },
+  { path: "/dashboard", router: StudentRoutes.studentDashboardRouter },
+>>>>>>> main
 ];
 
 const teacherRouteList = [
