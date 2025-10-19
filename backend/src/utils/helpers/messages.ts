@@ -64,6 +64,14 @@ export const errorMessages = {
     en: "Invalid Image",
     ka: "არასწორი სურათი",
   },
+  invalidDateOfBirth: {
+    en: "Invalid date of birth",
+    ka: "დაბადების თარიღი არასწორია",
+  },
+  userAlreadyExists: {
+    en: "User already exists",
+    ka: "მომხმარებელი უკვე არსებობს",
+  },
 
   // Messages
   verificationSuccessful: {
@@ -94,7 +102,10 @@ export const errorMessages = {
     en: "Image uploaded successfully",
     ka: "სურათი წარმატებით აიტვირთა",
   },
-
+  userDeleted: {
+    en: "User deleted successfully",
+    ka: "მომხმარებელი წარმატებით წაიშალა",
+  },
   // Validation errors
   invalidEmail: {
     en: "Invalid email",
